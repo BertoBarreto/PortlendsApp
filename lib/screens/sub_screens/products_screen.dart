@@ -85,22 +85,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
           ];
         },
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: ListView.separated(
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 40,
-              );
-            },
-            itemCount: _products.length,
-            itemBuilder: (_, index) {
-              return ProductItem(
-                  prodName: _products[index].prodName,
-                  cost: _products[index].cost,
-                  unit: _products[index].unit,
-                  imageURl: _products[index].imageURl);
-            },
+        body: Container(
+          height: 5,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: ListView.separated(
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 40,
+                );
+              },
+              itemCount: _products.length,
+              itemBuilder: (_, index) {
+                return ProductItem(
+                    prodName: _products[index].prodName,
+                    cost: _products[index].cost,
+                    unit: _products[index].unit,
+                    imageURl: _products[index].imageURl);
+              },
+            ),
           ),
         ),
       ),
