@@ -3,7 +3,7 @@ module.exports = {
   getAllUsers: "SELECT * FROM Users",
   deleteUser: "DELETE FROM Users WHERE uid=@idParam",
   getAllCategories: `select Categorias.Categoria_ID,Categorias.Descricao, count(Inventario.Pd_ID) as contagem from Categorias
-                      join Inventario on Inventario.CategoriaID=Categorias.Categoria_ID
+                      left join Inventario on Inventario.CategoriaID=Categorias.Categoria_ID
                       group by Categorias.Categoria_ID,Categorias.Descricao`,
   getAllSubCategoriesFromCategory:`select Subcategorias.Subcategoria_ID,Subcategorias.Descricao, count(Inventario.Pd_ID) as contagem from Subcategorias
                                     join Inventario on Inventario.SubcategoriaID=Subcategorias.Subcategoria_ID

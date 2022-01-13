@@ -51,6 +51,10 @@ class CategoriesScreen extends StatelessWidget {
       body: FutureBuilder(
           future: httpService.getCategories(),
           builder: (BuildContext context, AsyncSnapshot<List<Categoria>> snapshot) {
+            print('aquiTOne');
+            print(snapshot.connectionState);
+            print(snapshot.hasData);
+
             if (snapshot.hasData) {
               List<Categoria> categories = snapshot.requireData;
               return Padding(

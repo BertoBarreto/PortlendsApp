@@ -5,19 +5,20 @@ import 'package:portlends/models/category.dart';
 
 class Categories {
   Future<List<Categoria>> getCategories() async {
-    String url = "192.168.182.21:3000/api/v1/categorias";
-    print('aqui');
+    String url = "http://192.168.182.21:3000/api/v1/categorias";
+
     final res = await http.get(Uri.parse(url));
-    print('here');
-    print(res);
+
     if (res.statusCode == 200) {
-      List<dynamic> body = jsonDecode(res.body);
-      print(body);
-      List<Categoria> categories = body
-          .map(
-            (dynamic item) => Categoria.fromJson(item),
-          )
-          .toList();
+      final body = jsonDecode(res.body)['result'];
+      List<Categoria> categories = [];
+      for (final Map<String, dynamic> item in body) {
+        categories.add(Categoria(
+            id: item['Categoria_ID'],
+            amount: item['contagem'],
+            imageUrl: '',
+            name: item['Descricao']));
+      }
 
       return categories;
     } else {

@@ -14,7 +14,7 @@ let get_all_categories = async (req,res)=>{
         
         res.status(200).json({
             "message": "Selected Categories",
-            "result": result.recordsets
+            "result": result.recordsets[0]
             })
 
     } catch (err) {
