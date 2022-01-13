@@ -61,7 +61,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           return <Widget>[
             MyAppBar(
               innerBoxIsScrolled: innerBoxIsScrolled,
-              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.20,
+              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.25,
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -81,29 +81,57 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 SizedBox(
                   height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
                 ),
+                ChipsChoice<int>.single(
+                  value: tag,
+                  onChanged: (val) => setState(() => tag = val),
+                  choiceItems: C2Choice.listFrom<int, String>(
+                    source: subcategories,
+                    value: (i, v) => i,
+                    label: (i, v) => v,
+                  ),
+                  choiceStyle: C2ChoiceStyle(
+                    color: Theme.of(context).colorScheme.secondaryVariant,
+                    showCheckmark: true,
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    borderColor: Colors.blueGrey.withOpacity(.5),
+                  ),
+                  choiceActiveStyle: C2ChoiceStyle(
+                    color: Theme.of(context).colorScheme.secondaryVariant,
+                    showCheckmark: true,
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    borderColor: Colors.blueGrey.withOpacity(.5),
+                    brightness: Brightness.dark,
+                  ),
+                ),
               ],
             ),
           ];
         },
-        body: Container(
-          height: 5,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: ListView.separated(
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: 40,
-                );
-              },
-              itemCount: _products.length,
-              itemBuilder: (_, index) {
-                return ProductItem(
-                    prodName: _products[index].prodName,
-                    cost: _products[index].cost,
-                    unit: _products[index].unit,
-                    imageURl: _products[index].imageURl);
-              },
-            ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: ListView.separated(
+            padding: EdgeInsets.all(0),
+            separatorBuilder: (BuildContext context, int index) {
+              return SizedBox(
+                height: 40,
+              );
+            },
+            itemCount: _products.length,
+            itemBuilder: (_, index) {
+              return ProductItem(
+                  prodName: _products[index].prodName,
+                  cost: _products[index].cost,
+                  unit: _products[index].unit,
+                  imageURl: _products[index].imageURl);
+            },
           ),
         ),
       ),

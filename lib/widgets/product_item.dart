@@ -22,22 +22,24 @@ class ProductItem extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return Row(
       children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-          child: Image.asset(
-            'images/jardim.jpg',
-            fit: BoxFit.fitHeight,
-            height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.15,
-            width:
-                (mediaQuery.size.width - mediaQuery.padding.left - mediaQuery.padding.right) * 0.47,
+        Container(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+            child: Image.asset(
+              'images/jardim.jpg',
+              fit: BoxFit.fitHeight,
+              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.15,
+              width: (mediaQuery.size.width - mediaQuery.padding.left - mediaQuery.padding.right) *
+                  0.43,
+            ),
           ),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 5),
           width:
-              (mediaQuery.size.width - mediaQuery.padding.left - mediaQuery.padding.right) * 0.44,
+              (mediaQuery.size.width - mediaQuery.padding.left - mediaQuery.padding.right) * 0.48,
           height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.15,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

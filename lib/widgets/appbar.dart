@@ -17,7 +17,7 @@ class MyAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 0,
-      toolbarHeight: bottom.length == 2 ? height * 0.2 : height * 0.4,
+      toolbarHeight: height * 0.4,
       leading: IconButton(
         onPressed: onTap,
         icon: const Icon(
@@ -29,11 +29,11 @@ class MyAppBar extends StatelessWidget {
       forceElevated: innerBoxIsScrolled,
       bottom: bottom != null
           ? PreferredSize(
-              preferredSize: Size.fromHeight(bottom.length <= 2 ? height * 0.4 : height * 1),
+              preferredSize: Size.fromHeight(bottom.length > 3 ? height * 1.1 : height * 0.9),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: SizedBox(
-                  height: bottom.length <= 2 ? height * 0.4 : height * 1.1,
+                  height: bottom.length > 3 ? height * 1.1 : height * 0.9,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [if (bottom != null) ...bottom else ...[]],
