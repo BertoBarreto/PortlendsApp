@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:portlends/models/category.dart';
-import 'package:portlends/providers/categories.dart';
+import 'package:portlends/providers/httpService.dart';
 import 'package:portlends/widgets/appbar.dart';
 import 'package:portlends/widgets/category_card.dart';
 import 'package:portlends/widgets/search_bar.dart';
@@ -12,7 +12,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final Categories httpService = Categories();
+    final HttpService httpService = HttpService();
 
     /*final categories = [
       {'name': 'Jardim', 'id': 1, 'amount': 43},
@@ -76,6 +76,7 @@ class CategoriesScreen extends StatelessWidget {
                           imageUrl: '',
                           categoryName: categories[index].name,
                           amount: categories[index].amount,
+                          catId: categories[index].id,
                         );
                       }));
             } else {

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "246384983661",
+    "project_id": "portlends-ad27b",
+    "storage_bucket": "portlends-ad27b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246384983661:android:7f579319a79f0da965c964",
+        "android_client_info": {
+          "package_name": "com.portlends.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246384983661-1qvm2kgcoi9tav7tshbtovffemfcth3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaEft8sf0xtJZJu2zzkMwDP1hM0t9QGus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246384983661-1qvm2kgcoi9tav7tshbtovffemfcth3u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

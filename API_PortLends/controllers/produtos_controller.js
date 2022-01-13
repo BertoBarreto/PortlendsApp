@@ -16,7 +16,7 @@ let get_produtos_categoria = async (req,res)=>{
         
         res.status(200).json({
             "message": "Selected products",
-            "result": result.recordsets
+            "result": result.recordset
             })
 
     } catch (err) {
@@ -26,21 +26,24 @@ let get_produtos_categoria = async (req,res)=>{
 }
 
 let get_produtos_categoria_subcategoria = async (req,res)=>{
-    let {categoriaId, subcategoriaId} = req.body
+    let {categoriaID, subcategoriaID} = req.body
+    console.log(categoriaID)
+    console.log(subcategoriaID)
     try {
  
         let pool = await sql.connect(db_config)
         
         let result = await pool.request()
-            .input("categoriaId", sql.Int, categoriaId)
-            .input("subcategoriaId", sql.Int, subcategoriaId)
+            .input("categoriaId", sql.Int, categoriaID)
+            .input("subcategoriaId", sql.Int, subcategoriaID)
             .query(queries.getAllCategorySubcategoryProd)
           
         pool.close()
-        
+
+
         res.status(200).json({
             "message": "Selected Products",
-            "result": result.recordsets
+            "result": result.recordset
             })
 
     } catch (err) {

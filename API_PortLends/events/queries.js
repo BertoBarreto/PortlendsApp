@@ -6,11 +6,11 @@ module.exports = {
                       left join Inventario on Inventario.CategoriaID=Categorias.Categoria_ID
                       group by Categorias.Categoria_ID,Categorias.Descricao`,
   getAllSubCategoriesFromCategory:`select Subcategorias.Subcategoria_ID,Subcategorias.Descricao, count(Inventario.Pd_ID) as contagem from Subcategorias
-                                    join Inventario on Inventario.SubcategoriaID=Subcategorias.Subcategoria_ID
+                                    left join Inventario on Inventario.SubcategoriaID=Subcategorias.Subcategoria_ID
                                     where Subcategorias.Categoria_ID = @idParam
                                     group by Subcategorias.Subcategoria_ID,Subcategorias.Descricao`,
   getAllCategoryProd: "select * from Inventario where CategoriaID = @idParam",
-  getAllCategorySubcategoryProd: "select * from Inventario where CategoriaID = @categoriaID and SubcategoriaId = @subcategoriaId",
+  getAllCategorySubcategoryProd: "select * from Inventario where CategoriaID = @categoriaId and SubcategoriaId = @subcategoriaId",
  
 };
 

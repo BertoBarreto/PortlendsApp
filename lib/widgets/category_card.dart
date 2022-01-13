@@ -6,12 +6,14 @@ class CategoryCard extends StatelessWidget {
   final String imageUrl;
   final String categoryName;
   final int amount;
+  final int catId;
 
   const CategoryCard({
     Key? key,
     required this.imageUrl,
     required this.categoryName,
     required this.amount,
+    required this.catId,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,8 @@ class CategoryCard extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/produtos', arguments: CategoryArguments(1, categoryName));
+        Navigator.pushNamed(context, '/produtos',
+            arguments: CategoryArguments(catId, categoryName));
       },
       child: GridTile(
         child: Card(

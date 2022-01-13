@@ -14,7 +14,7 @@ let get_all_subcategories_from_category = async(req,res)=>{
         
         res.status(200).json({
             "message": "Selected subcategories from categorie",
-            "result":  result.recordsets
+            "result":  result.recordset
         })
 
     } catch (err) {
