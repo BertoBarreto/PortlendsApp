@@ -20,6 +20,14 @@ select Categorias.Categoria_ID,Categorias.Descricao, count(Inventario.Pd_ID) as 
 join Inventario on Inventario.CategoriaID=Categorias.Categoria_ID
 group by Categorias.Categoria_ID,Categorias.Descricao
 
+select Subcategorias.Subcategoria_ID,Subcategorias.Descricao, count(Inventario.Pd_ID) as contagem from Subcategorias
+join Inventario on Inventario.SubcategoriaID=Subcategorias.Subcategoria_ID
+where Subcategorias.Categoria_ID = @idParam
+group by Subcategorias.Subcategoria_ID,Subcategorias.Descricao
+
+
+select * from Categorias
+  select * from Inventario where CategoriaID = 5 and SubcategoriaId = 1
 
 select * from Inventario
 where CategoriaID = 5

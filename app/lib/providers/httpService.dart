@@ -6,8 +6,10 @@ import 'package:portlends/models/product.dart';
 import 'package:portlends/models/subcategory.dart';
 
 class HttpService {
+  final String ip = '192.168.187.1';
+  //final String ip = '192.168.182.21';
   Future<List<Categoria>> getCategories() async {
-    String url = "http://192.168.182.21:3000/api/v1/categorias";
+    String url = "http://$ip:3000/api/v1/categorias";
 
     final res = await http.get(Uri.parse(url));
 
@@ -31,7 +33,7 @@ class HttpService {
   }
 
   Future<List<SubCategoria>> getSubCategories(int catId) async {
-    String url = "http://192.168.182.21:3000/api/v1/subcategorias/$catId";
+    String url = "http://$ip:3000/api/v1/subcategorias/$catId";
 
     final res = await http.get(Uri.parse(url));
 
@@ -63,7 +65,7 @@ class HttpService {
   }
 
   Future<List<Product>> getAllProducts(int catId) async {
-    String url = "http://192.168.182.21:3000/api/v1/produtos/$catId";
+    String url = "http://$ip:3000/api/v1/produtos/$catId";
 
     final res = await http.get(Uri.parse(url));
 
@@ -93,7 +95,7 @@ class HttpService {
   }
 
   Future<List<Product>> getProductsSubCategory(int catId, int subCatId) async {
-    String url = "http://192.168.182.21:3000/api/v1/produtos/";
+    String url = "http://$ip:3000/api/v1/produtos/";
 
     final res = await http.post(Uri.parse(url),
         headers: <String, String>{

@@ -1,4 +1,4 @@
-package com.example.portlends_app
+package com.portlends.app
 
 import io.flutter.embedding.android.FlutterActivity
 
