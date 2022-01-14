@@ -29,11 +29,11 @@ class MyAppBar extends StatelessWidget {
       forceElevated: innerBoxIsScrolled,
       bottom: bottom != null
           ? PreferredSize(
-              preferredSize: Size.fromHeight(bottom.length > 3 ? height * 1.1 : height * 0.9),
+              preferredSize: Size.fromHeight(bottom.length > 3 ? height * 1 : height * 0.9),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: SizedBox(
-                  height: bottom.length > 3 ? height * 1.1 : height * 0.9,
+                  height: bottom.length > 3 ? height * 1 : height * 0.9,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [if (bottom != null) ...bottom else ...[]],

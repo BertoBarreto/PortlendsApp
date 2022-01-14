@@ -10,6 +10,6 @@ class SubCategoria {
   });
 
   String getFormatedString() {
-    return amount > 0 ? '$nome ($amount)' : nome;
+    return amount < 0 ? nome : '$nome (${amount > 99 ? "99+" : amount})';
   }
 }

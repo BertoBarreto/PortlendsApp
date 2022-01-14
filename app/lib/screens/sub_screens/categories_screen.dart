@@ -14,14 +14,6 @@ class CategoriesScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final HttpService httpService = HttpService();
 
-    /*final categories = [
-      {'name': 'Jardim', 'id': 1, 'amount': 43},
-      {'name': 'Mecânica', 'id': 2, 'amount': 32},
-      {'name': 'Cozinha', 'id': 3, 'amount': 22},
-      {'name': 'Roupa', 'id': 4, 'amount': 96},
-      {'name': 'Livros', 'id': 5, 'amount': 12},
-      {'name': 'Desport', 'id': 6, 'amount': 103},
-    ];*/
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
@@ -51,10 +43,6 @@ class CategoriesScreen extends StatelessWidget {
       body: FutureBuilder(
           future: httpService.getCategories(),
           builder: (BuildContext context, AsyncSnapshot<List<Categoria>> snapshot) {
-            print('aquiTOne');
-            print(snapshot.connectionState);
-            print(snapshot.hasData);
-
             if (snapshot.hasData) {
               List<Categoria> categories = snapshot.requireData;
               return Padding(
@@ -73,7 +61,7 @@ class CategoriesScreen extends StatelessWidget {
                       itemCount: categories.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return CategoryCard(
-                          imageUrl: '',
+                          imageUrl: categories[index].imageUrl,
                           categoryName: categories[index].name,
                           amount: categories[index].amount,
                           catId: categories[index].id,

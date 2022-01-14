@@ -6,7 +6,7 @@ import 'package:portlends/models/product.dart';
 import 'package:portlends/models/subcategory.dart';
 
 class HttpService {
-  final String ip = '192.168.187.1';
+  final String ip = '192.168.1.65';
   //final String ip = '192.168.182.21';
   Future<List<Categoria>> getCategories() async {
     String url = "http://$ip:3000/api/v1/categorias";
@@ -22,7 +22,7 @@ class HttpService {
         categories.add(Categoria(
             id: item['Categoria_ID'],
             amount: item['contagem'],
-            imageUrl: '',
+            imageUrl: item['imageUrl'],
             name: item['Descricao']));
       }
 
@@ -81,7 +81,7 @@ class HttpService {
               prodName: item['Nome'],
               cost: 0,
               unit: '',
-              imageURl: '',
+              imageURl: item['ImgUrl'],
               description: item['Descricao'],
               grade: item['EstadoProdutoID'],
               gradeDesc: item['DescEstado']),
@@ -118,7 +118,7 @@ class HttpService {
               prodName: item['Nome'],
               cost: 0,
               unit: '',
-              imageURl: '',
+              imageURl: item['ImgUrl'],
               description: item['Descricao'],
               grade: item['EstadoProdutoID'],
               gradeDesc: item['DescEstado']),

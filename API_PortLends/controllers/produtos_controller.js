@@ -27,8 +27,6 @@ let get_produtos_categoria = async (req,res)=>{
 
 let get_produtos_categoria_subcategoria = async (req,res)=>{
     let {categoriaID, subcategoriaID} = req.body
-    console.log(categoriaID)
-    console.log(subcategoriaID)
     try {
  
         let pool = await sql.connect(db_config)
