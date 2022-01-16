@@ -7,9 +7,11 @@ class Product {
   final String imageURl;
   final String description;
   final int grade;
+  final int pdId;
   final String gradeDesc;
 
   const Product({
+    required this.pdId,
     required this.prodName,
     required this.cost,
     required this.unit,

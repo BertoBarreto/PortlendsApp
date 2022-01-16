@@ -23,8 +23,34 @@ let get_all_categories = async (req,res)=>{
     }
 }
 
+let get_search_categories = async (req,res)=>{
+    let {pesquisa} = req.body
+    try {
+
+        pesquisa = '%' + pesquisa + '%'
+        console.log(pesquisa)
+        let pool = await sql.connect(db_config)
+        
+        let result = await pool.request()
+            .input('nome', sql.VarChar, pesquisa)
+            .query(queries.getSearchCategories)
+          
+        pool.close()
+        
+        res.status(200).json({
+            "message": "Selected Search Categories",
+            "result": result.recordset
+            })
+
+    } catch (err) {
+        
+        res.status(500).send(err)
+    }
+}
+
 
 
 module.exports={
-    get_all_categories
+    get_all_categories,
+    get_search_categories
 }

@@ -52,7 +52,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       SizedBox(
                         height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
                       ),
-                      const SearchBar(hint: 'Pesquisar Produtos'),
+                      const SearchBar(
+                        hint: 'Pesquisar Produtos',
+                      ),
                       SizedBox(
                         height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
                       ),
@@ -109,6 +111,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         itemCount: _products.length,
                         itemBuilder: (_, index) {
                           return ProductItem(
+                              prodId: _products[index].pdId,
                               prodName: _products[index].prodName,
                               cost: _products[index].cost,
                               unit: _products[index].unit,

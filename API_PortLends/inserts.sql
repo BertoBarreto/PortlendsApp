@@ -87,3 +87,9 @@ select * from Subcategorias
 select Categorias.Categoria_ID,Categorias.ImageURL,Categorias.Descricao, count(Inventario.Pd_ID) as contagem from Categorias
                       left join Inventario on Inventario.CategoriaID=Categorias.Categoria_ID
                       group by Categorias.Categoria_ID,Categorias.Descricao
+
+
+
+
+select * from Categorias
+where Categorias.Descricao LIKE '%C%'

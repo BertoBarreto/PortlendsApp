@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portlends/screens/sub_screens/categories_screen.dart';
 import 'package:portlends/screens/main_screens/main_screen.dart';
+import 'package:portlends/screens/sub_screens/product_info_screen.dart';
 import 'package:portlends/screens/sub_screens/products_screen.dart';
 
 void main() {
@@ -26,7 +27,6 @@ void main() {
         primaryColor: Color.fromRGBO(11, 206, 131, 1),
         accentColor: Color.fromRGBO(45, 12, 87, 1),
         inputDecorationTheme: InputDecorationTheme(
-          prefixIconColor: Colors.grey,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -43,6 +43,11 @@ void main() {
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Color.fromRGBO(114, 3, 255, 1),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Color.fromRGBO(11, 206, 131, 1),
+          selectionHandleColor: Color.fromRGBO(11, 206, 131, 1),
+          selectionColor: Color.fromRGBO(11, 206, 131, 0.3),
         ),
         textTheme: const TextTheme(
           bodyText1: TextStyle(
@@ -85,6 +90,7 @@ void main() {
       routes: {
         '/': (context) => MainScreen(),
         '/produtos': (context) => ProductsScreen(),
+        '/produto_info': (context) => const ProductInfoScreen(),
       },
     ),
   );

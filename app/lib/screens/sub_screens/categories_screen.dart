@@ -6,13 +6,44 @@ import 'package:portlends/widgets/appbar.dart';
 import 'package:portlends/widgets/category_card.dart';
 import 'package:portlends/widgets/search_bar.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
 
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final HttpService httpService = HttpService();
+    String searchCategorie = '';
+    Future<List<Categoria>> _initCategorias;
+
+    Future<void> getUpdateCategorias() async {
+      _initCategorias = httpService.getCategories(searchCategorie);
+    }
+
+    Future<void> refreshCategorias() async {
+      setState(() {
+        _initCategorias = httpService.getCategories(searchCategorie);
+      });
+    }
+
+    @override
+    void initState() {
+      super.initState();
+
+      // initial load
+      // _initCategorias = getUpdateCategorias();
+    }
+
+    void updateCategorie(String newText) {
+      setState(() {
+        searchCategorie = newText;
+      });
+    }
 
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -35,40 +66,51 @@ class CategoriesScreen extends StatelessWidget {
               ),
               SearchBar(
                 hint: 'Pesquisar Categoria',
+                onSubmited: (text) {
+                  updateCategorie(text);
+                },
               )
             ],
           ),
         ];
       },
       body: FutureBuilder(
-          future: httpService.getCategories(),
+          future: httpService.getCategories(searchCategorie),
           builder: (BuildContext context, AsyncSnapshot<List<Categoria>> snapshot) {
-            if (snapshot.hasData) {
-              List<Categoria> categories = snapshot.requireData;
-              return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: GridView.builder(
-                      padding: EdgeInsets.all(0),
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: ((mediaQuery.size.width -
-                                      mediaQuery.padding.left -
-                                      mediaQuery.padding.right) -
-                                  10) *
-                              0.5,
-                          childAspectRatio: 650 / (mediaQuery.size.height - mediaQuery.padding.top),
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10),
-                      itemCount: categories.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return CategoryCard(
-                          imageUrl: categories[index].imageUrl,
-                          categoryName: categories[index].name,
-                          amount: categories[index].amount,
-                          catId: categories[index].id,
-                        );
-                      }));
-            } else {
-              return Text('Getting Data...');
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+              case ConnectionState.active:
+                {
+                  return Text('Getting Data...');
+                }
+              case ConnectionState.done:
+                {
+                  List<Categoria> categories = snapshot.requireData;
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: GridView.builder(
+                          padding: EdgeInsets.all(0),
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: ((mediaQuery.size.width -
+                                          mediaQuery.padding.left -
+                                          mediaQuery.padding.right) -
+                                      10) *
+                                  0.5,
+                              childAspectRatio:
+                                  520 / ((mediaQuery.size.height - mediaQuery.padding.top) * 0.8),
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                          itemCount: categories.length,
+                          itemBuilder: (BuildContext ctx, index) {
+                            return CategoryCard(
+                              imageUrl: categories[index].imageUrl,
+                              categoryName: categories[index].name,
+                              amount: categories[index].amount,
+                              catId: categories[index].id,
+                            );
+                          }));
+                }
             }
           }),
     );

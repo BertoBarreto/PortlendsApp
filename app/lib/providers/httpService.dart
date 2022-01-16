@@ -8,15 +8,15 @@ import 'package:portlends/models/subcategory.dart';
 class HttpService {
   final String ip = '192.168.1.65';
   //final String ip = '192.168.182.21';
-  Future<List<Categoria>> getCategories() async {
+  Future<List<Categoria>> getCategories(String search) async {
     String url = "http://$ip:3000/api/v1/categorias";
-
+    print('search->: $search');
     final res = await http.get(Uri.parse(url));
 
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
       print('-' * 60);
-      print(body);
+      // print(body);
       List<Categoria> categories = [];
       for (final Map<String, dynamic> item in body) {
         categories.add(Categoria(
@@ -40,7 +40,7 @@ class HttpService {
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
       print('-' * 60);
-      print(body);
+      // print(body);
       List<SubCategoria> subcategories = [
         const SubCategoria(
           subcategoriaId: -1,
@@ -72,12 +72,13 @@ class HttpService {
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
       print('-' * 60);
-      print(body);
+      // print(body);
 
       List<Product> products = [];
       for (final Map<String, dynamic> item in body) {
         products.add(
           Product(
+              pdId: item['Pd_ID'][0],
               prodName: item['Nome'],
               cost: 0,
               unit: '',
@@ -109,12 +110,13 @@ class HttpService {
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
       print('-' * 60);
-      print(body);
+      // print(body);
 
       List<Product> products = [];
       for (final Map<String, dynamic> item in body) {
         products.add(
           Product(
+              pdId: item['Pd_ID'][0],
               prodName: item['Nome'],
               cost: 0,
               unit: '',
