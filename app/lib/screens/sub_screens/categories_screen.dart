@@ -57,7 +57,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               ),
               SizedBox(
-                height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
+                height:
+                    (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
               ),
               SearchBar(
                 hint: 'Pesquisar Categoria',
@@ -71,7 +72,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       },
       body: FutureBuilder(
           future: httpService.getCategories(searchCategorie),
-          builder: (BuildContext context, AsyncSnapshot<List<Categoria>> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Categoria>> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
@@ -86,16 +88,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: GridView.builder(
                           padding: EdgeInsets.all(0),
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: ((mediaQuery.size.width -
-                                          mediaQuery.padding.left -
-                                          mediaQuery.padding.right) -
-                                      10) *
-                                  0.5,
-                              childAspectRatio:
-                                  520 / ((mediaQuery.size.height - mediaQuery.padding.top) * 0.8),
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10),
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: ((mediaQuery.size.width -
+                                              mediaQuery.padding.left -
+                                              mediaQuery.padding.right) -
+                                          10) *
+                                      0.5,
+                                  childAspectRatio: 500 /
+                                      ((mediaQuery.size.height -
+                                              mediaQuery.padding.top) *
+                                          0.8),
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10),
                           itemCount: categories.length,
                           itemBuilder: (BuildContext ctx, index) {
                             return CategoryCard(

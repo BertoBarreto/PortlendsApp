@@ -21,22 +21,27 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as CategoryArguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as CategoryArguments;
     final mediaQuery = MediaQuery.of(context);
     final HttpService httpService = HttpService();
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: FutureBuilder(
         future: httpService.getSubCategories(args.categoryID),
-        builder: (BuildContext context, AsyncSnapshot<List<SubCategoria>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<SubCategoria>> snapshot) {
           if (snapshot.hasData) {
-            SubCategories subcategories = SubCategories(subcategorias: snapshot.requireData);
+            SubCategories subcategories =
+                SubCategories(subcategorias: snapshot.requireData);
             return NestedScrollView(
-              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   MyAppBar(
                     innerBoxIsScrolled: innerBoxIsScrolled,
-                    height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.25,
+                    height: (mediaQuery.size.height - mediaQuery.padding.top) *
+                        0.27,
                     onTap: () {
                       Navigator.of(context).pop();
                     },
@@ -50,20 +55,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
+                        height:
+                            (mediaQuery.size.height - mediaQuery.padding.top) *
+                                0.02,
                       ),
                       const SearchBar(
                         hint: 'Pesquisar Produtos',
                       ),
                       SizedBox(
-                        height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
+                        height:
+                            (mediaQuery.size.height - mediaQuery.padding.top) *
+                                0.02,
                       ),
                       ChipsChoice<int>.single(
                         value: tag,
                         onChanged: (val) => setState(() => tag = val),
                         choiceItems: C2Choice.listFrom<int, String>(
                           source: subcategories.getFormatedStrings(),
-                          value: (i, v) => subcategories.subcategorias[i].subcategoriaId,
+                          value: (i, v) =>
+                              subcategories.subcategorias[i].subcategoriaId,
                           label: (i, v) => v,
                         ),
                         choiceStyle: C2ChoiceStyle(
@@ -72,8 +82,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
-                              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                              ?.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
                           borderColor: Colors.blueGrey.withOpacity(.5),
                         ),
                         choiceActiveStyle: C2ChoiceStyle(
@@ -82,8 +95,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           labelStyle: Theme.of(context)
                               .textTheme
                               .bodyText1
-                              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                              ?.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
                           borderColor: Colors.blueGrey.withOpacity(.5),
                           brightness: Brightness.dark,
                         ),
@@ -96,7 +112,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 future: tag >= 0
                     ? httpService.getProductsSubCategory(args.categoryID, tag)
                     : httpService.getAllProducts(args.categoryID),
-                builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasData) {
                     List<Product> _products = snapshot.requireData;
                     return Padding(
