@@ -6,7 +6,7 @@ import 'package:portlends/models/product.dart';
 import 'package:portlends/models/subcategory.dart';
 
 class HttpService {
-  final String ip = '192.168.1.65';
+  final String ip = '172.20.10.9';
   //final String ip = '192.168.182.21';
   Future<List<Categoria>> getCategories(String search) async {
     String url = "http://$ip:3000/api/v1/categorias";
