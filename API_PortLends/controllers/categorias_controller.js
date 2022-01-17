@@ -28,7 +28,6 @@ let get_search_categories = async (req,res)=>{
     try {
 
         pesquisa = '%' + pesquisa + '%'
-        console.log(pesquisa)
         let pool = await sql.connect(db_config)
         
         let result = await pool.request()

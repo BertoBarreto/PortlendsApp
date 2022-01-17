@@ -21,14 +21,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     String searchCategorie = '';
     Future<List<Categoria>> _initCategorias;
 
-    Future<void> getUpdateCategorias() async {
+    Future<List<Categoria>> getUpdateCategorias() async {
       _initCategorias = httpService.getCategories(searchCategorie);
-    }
-
-    Future<void> refreshCategorias() async {
-      setState(() {
-        _initCategorias = httpService.getCategories(searchCategorie);
-      });
+      return _initCategorias;
     }
 
     @override
@@ -36,7 +31,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       super.initState();
 
       // initial load
-      // _initCategorias = getUpdateCategorias();
+      _initCategorias = getUpdateCategorias();
     }
 
     void updateCategorie(String newText) {
