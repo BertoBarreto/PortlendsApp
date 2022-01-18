@@ -6,7 +6,7 @@ import 'package:portlends/models/product.dart';
 import 'package:portlends/models/subcategory.dart';
 
 class HttpService {
-  final String ip = '172.20.10.9';
+  final String ip = '192.168.1.65';
   //final String ip = '192.168.182.21';
   Future<List<Categoria>> getCategories(String search) async {
     String url = "http://$ip:3000/api/v1/categorias";
@@ -64,6 +64,32 @@ class HttpService {
     }
   }
 
+  Future<Product> getProduct(int prodId) async {
+    String url = "http://$ip:3000/api/v1/produto/$prodId";
+
+    final res = await http.get(Uri.parse(url));
+
+    if (res.statusCode == 200) {
+      final body = jsonDecode(res.body)['result'];
+      print('-' * 60);
+      Product product = Product(
+        pdId: prodId,
+        prodName: body['Nome'],
+        cost: body['quantia'] != null ? (body['quantia'] as int).toDouble() : 0,
+        unit: body['tipo'] ?? '',
+        imageURl: body['ImgUrl'],
+        description: body['Descricao'],
+        grade: body['EstadoProdutoID'],
+        gradeDesc: body['DescEstado'],
+        disponibility: body['Disponibilidade'] == 0 ? false : true,
+      );
+
+      return product;
+    } else {
+      throw "Unable to retrieve posts.";
+    }
+  }
+
   Future<List<Product>> getAllProducts(int catId) async {
     String url = "http://$ip:3000/api/v1/produtos/$catId";
 
@@ -72,21 +98,13 @@ class HttpService {
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
       print('-' * 60);
-      // print(body);
+      print(body);
 
       List<Product> products = [];
       for (final Map<String, dynamic> item in body) {
-        products.add(
-          Product(
-              pdId: item['Pd_ID'][0],
-              prodName: item['Nome'],
-              cost: 0,
-              unit: '',
-              imageURl: item['ImgUrl'],
-              description: item['Descricao'],
-              grade: item['EstadoProdutoID'],
-              gradeDesc: item['DescEstado']),
-        );
+        final pd = await getProduct(item["Pd_ID"]);
+
+        products.add(pd);
       }
 
       return products;
@@ -114,17 +132,8 @@ class HttpService {
 
       List<Product> products = [];
       for (final Map<String, dynamic> item in body) {
-        products.add(
-          Product(
-              pdId: item['Pd_ID'][0],
-              prodName: item['Nome'],
-              cost: 0,
-              unit: '',
-              imageURl: item['ImgUrl'],
-              description: item['Descricao'],
-              grade: item['EstadoProdutoID'],
-              gradeDesc: item['DescEstado']),
-        );
+        final pd = await getProduct(item["Pd_ID"]);
+        products.add(pd);
       }
 
       return products;

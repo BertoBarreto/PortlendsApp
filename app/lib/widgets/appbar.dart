@@ -16,8 +16,6 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Colors.transparent,
-      
       elevation: 0,
       toolbarHeight: height * 0.4,
       leading: IconButton(
@@ -31,8 +29,7 @@ class MyAppBar extends StatelessWidget {
       forceElevated: innerBoxIsScrolled,
       bottom: bottom != null
           ? PreferredSize(
-              preferredSize: Size.fromHeight(
-                  bottom!.length > 3 ? height * 1 : height * 0.9),
+              preferredSize: Size.fromHeight(bottom!.length > 3 ? height * 1 : height * 0.9),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: SizedBox(

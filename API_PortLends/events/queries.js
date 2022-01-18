@@ -7,6 +7,8 @@ module.exports = {
   getAllSubCategoriesFromCategory:`EXEC getSubcategories @CategoriaID = @idParam;`,
   getAllCategoryProd: "EXEC getCategoryProducts @CategoriaID = @idParam;",
   getAllCategorySubcategoryProd: "EXEC getSubcategoryProducts @CategoriaID = @categoriaId, @SubcategoriaID = @subcategoriaId;",
+  getProduct: "SELECT * FROM Inventario JOIN ImagensProdutos ON ImagensProdutos.Pd_ID=Inventario.Pd_ID LEFT JOIN PrecoAluguer on PrecoAluguer.Pd_ID=Inventario.Pd_ID WHERE Inventario.Pd_ID=@pdID AND PrecoAluguer.data >= ALL (select data from PrecoAluguer Where Pd_ID=@pdID)",
+  getPrecoProduct: "SELECT quantia FROM PrecoAluguer WHERE PrecoAluguer.data >= ALL (select data from PrecoAluguer Where Pd_ID=@pdID)"
  
 };
 

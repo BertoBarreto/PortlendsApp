@@ -10,6 +10,7 @@ BEGIN
 	ELSE
 	COMMIT TRANSACTION
 -- get categories with counter
+
 CREATE PROCEDURE getCategories
 AS
 BEGIN 
@@ -38,22 +39,25 @@ BEGIN
 
 
 -- get all category products
+-- select * from Inventario left join ImagensProdutos on ImagensProdutos.Pd_ID = Inventario.Pd_ID LEFT JOIN PrecoAluguer on PrecoAluguer.Pd_ID=Inventario.Pd_ID WHERE CategoriaID = @CategoriaID AND PrecoAluguer.data >= ALL (select data from PrecoAluguer)
+
 CREATE PROCEDURE getCategoryProducts @CategoriaID int
 AS
 BEGIN 
 	TRANSACTION
-	select * from Inventario left join ImagensProdutos on ImagensProdutos.Pd_ID = Inventario.Pd_ID where CategoriaID = @CategoriaID
+	select Pd_ID from Inventario where CategoriaID = @CategoriaID
 	IF @@ERROR <>0
 	ROLLBACK TRANSACTION
 	ELSE
 	COMMIT TRANSACTION
 
 --get all subcategory products
+
 CREATE PROCEDURE getSubcategoryProducts @CategoriaID int, @SubcategoriaID int
 AS
 BEGIN 
 	TRANSACTION
-	select * from Inventario left join ImagensProdutos on ImagensProdutos.Pd_ID = Inventario.Pd_ID where CategoriaID = @CategoriaID and SubcategoriaId = @SubcategoriaID
+	select Pd_ID from Inventario where CategoriaID = @CategoriaID and SubcategoriaId = @SubcategoriaID
 	IF @@ERROR <>0
 	ROLLBACK TRANSACTION
 	ELSE
