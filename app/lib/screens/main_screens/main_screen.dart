@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portlends/screens/sub_screens/categories_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -10,7 +10,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  List<Widget> _screens = [CategoriesScreen(), CategoriesScreen(), CategoriesScreen()];
+  final List<Widget> _screens = const [CategoriesScreen(), CategoriesScreen(), CategoriesScreen()];
   void _onItemTapped(int index, BuildContext context) {
     setState(() {
       _selectedIndex = index;

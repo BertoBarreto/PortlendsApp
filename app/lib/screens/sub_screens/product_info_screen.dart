@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portlends/models/product.dart';
 import 'package:portlends/providers/httpService.dart';
-import 'package:portlends/widgets/appbar.dart';
-import 'package:portlends/widgets/appbar2.dart';
 import 'package:portlends/widgets/fav_button.dart';
 import 'package:portlends/widgets/green_button.dart';
 
@@ -23,7 +21,7 @@ class ProductInfoScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
@@ -40,7 +38,7 @@ class ProductInfoScreen extends StatelessWidget {
               case ConnectionState.waiting:
               case ConnectionState.active:
                 {
-                  return Text('Getting Data...');
+                  return const Text('Getting Data...');
                 }
               case ConnectionState.done:
                 {
@@ -53,7 +51,7 @@ class ProductInfoScreen extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: (mediaQuery.size.height - mediaQuery.padding.top) * .975,
                             child: DraggableScrollableSheet(
                                 initialChildSize: 0.65,
@@ -61,8 +59,8 @@ class ProductInfoScreen extends StatelessWidget {
                                 minChildSize: 0.65,
                                 builder: (context, scrollController) {
                                   return Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 20),
-                                    decoration: BoxDecoration(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    decoration: const BoxDecoration(
                                         color: Colors.white,
                                         borderRadius:
                                             BorderRadius.vertical(top: Radius.circular(30))),
@@ -73,68 +71,66 @@ class ProductInfoScreen extends StatelessWidget {
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 20, vertical: 30),
-                                          child: Container(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  produto.prodName,
-                                                  style: Theme.of(context).textTheme.headline1,
-                                                ),
-                                                SizedBox(height: 10),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      '${produto.cost > 0 ? produto.cost : "Gratuito"}${produto.cost > 0 ? "€ ${produto.unit}" : ""}',
-                                                      style: Theme.of(context).textTheme.headline1,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                produto.prodName,
+                                                style: Theme.of(context).textTheme.headline1,
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    '${produto.cost > 0 ? produto.cost : "Gratuito"}${produto.cost > 0 ? "€ ${produto.unit}" : ""}',
+                                                    style: Theme.of(context).textTheme.headline1,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                    produto.disponibility
+                                                        ? 'Disponível'
+                                                        : 'Indisponível',
+                                                    style: Theme.of(context).textTheme.bodyText2,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  CircleAvatar(
+                                                    radius: 5,
+                                                    backgroundColor: produto.disponibility
+                                                        ? Colors.greenAccent
+                                                        : Colors.red,
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                'Estado:${produto.grade}/5',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2
+                                                    ?.copyWith(
+                                                      color:
+                                                          Theme.of(context).colorScheme.secondary,
                                                     ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text(
-                                                      produto.disponibility
-                                                          ? 'Disponível'
-                                                          : 'Indisponível',
-                                                      style: Theme.of(context).textTheme.bodyText2,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    CircleAvatar(
-                                                      radius: 5,
-                                                      backgroundColor: produto.disponibility
-                                                          ? Colors.greenAccent
-                                                          : Colors.red,
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(height: 10),
-                                                Text(
-                                                  'Estado:${produto.grade}/5',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText2
-                                                      ?.copyWith(
-                                                        color:
-                                                            Theme.of(context).colorScheme.secondary,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  produto.gradeDesc,
-                                                  style: Theme.of(context).textTheme.bodyText2,
-                                                ),
-                                                SizedBox(height: 30),
-                                                Text(
-                                                  'Descrição',
-                                                  style: Theme.of(context).textTheme.headline2,
-                                                ),
-                                                Text(
-                                                  produto.description,
-                                                  style: Theme.of(context).textTheme.bodyText2,
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                              Text(
+                                                produto.gradeDesc,
+                                                style: Theme.of(context).textTheme.bodyText2,
+                                              ),
+                                              const SizedBox(height: 30),
+                                              Text(
+                                                'Descrição',
+                                                style: Theme.of(context).textTheme.headline2,
+                                              ),
+                                              Text(
+                                                produto.description,
+                                                style: Theme.of(context).textTheme.bodyText2,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -150,12 +146,17 @@ class ProductInfoScreen extends StatelessWidget {
                                 color: Theme.of(context).colorScheme.background,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    FavButton(),
-                                    SizedBox(
+                                  children: [
+                                    const FavButton(),
+                                    const SizedBox(
                                       width: 30,
                                     ),
-                                    Expanded(child: GreenButton(text: 'CONTACTAR')),
+                                    Expanded(
+                                      child: GreenButton(
+                                        text: 'CONTACTAR',
+                                        onTap: () {},
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

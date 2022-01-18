@@ -1,5 +1,6 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:portlends/models/category.dart';
 import 'package:portlends/models/product.dart';
@@ -10,13 +11,12 @@ class HttpService {
   //final String ip = '192.168.182.21';
   Future<List<Categoria>> getCategories(String search) async {
     String url = "http://$ip:3000/api/v1/categorias";
-    print('search->: $search');
+
     final res = await http.get(Uri.parse(url));
 
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
-      print('-' * 60);
-      // print(body);
+
       List<Categoria> categories = [];
       for (final Map<String, dynamic> item in body) {
         categories.add(Categoria(
@@ -39,8 +39,7 @@ class HttpService {
 
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
-      print('-' * 60);
-      // print(body);
+
       List<SubCategoria> subcategories = [
         const SubCategoria(
           subcategoriaId: -1,
@@ -71,7 +70,7 @@ class HttpService {
 
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
-      print('-' * 60);
+
       Product product = Product(
         pdId: prodId,
         prodName: body['Nome'],
@@ -97,8 +96,6 @@ class HttpService {
 
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
-      print('-' * 60);
-      print(body);
 
       List<Product> products = [];
       for (final Map<String, dynamic> item in body) {
@@ -127,8 +124,6 @@ class HttpService {
 
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body)['result'];
-      print('-' * 60);
-      // print(body);
 
       List<Product> products = [];
       for (final Map<String, dynamic> item in body) {

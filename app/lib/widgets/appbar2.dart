@@ -8,7 +8,7 @@ class MyAppBar2 extends StatelessWidget {
     Key? key,
     required this.height,
     required this.onTap,
-    List<Widget>? this.bottom,
+    this.bottom,
   }) : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class MyAppBar2 extends StatelessWidget {
           ),
         ],
       ),
-      shape: ContinuousRectangleBorder(
+      shape: const ContinuousRectangleBorder(
           borderRadius:
               BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
       elevation: 0,

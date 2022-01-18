@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 
 class GreenButton extends StatelessWidget {
   final String text;
+  final void Function() onTap;
   const GreenButton({
     Key? key,
     required this.text,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onTap,
       child: Text(text),
       style: ButtonStyle(
-        maximumSize: MaterialStateProperty.all(Size(300, 50)),
+        maximumSize: MaterialStateProperty.all(const Size(300, 50)),
         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-        backgroundColor:
-            MaterialStateProperty.all(Theme.of(context).primaryColor),
+        backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
         foregroundColor: MaterialStateProperty.all(Colors.white),
-        textStyle:
-            MaterialStateProperty.all(Theme.of(context).textTheme.bodyText2),
+        textStyle: MaterialStateProperty.all(Theme.of(context).textTheme.bodyText2),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7.0),

@@ -9,7 +9,7 @@ class FavButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {},
-      child: Icon(
+      child: const Icon(
         Icons.favorite_outline,
         color: Colors.grey,
       ),

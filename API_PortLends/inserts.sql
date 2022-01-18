@@ -117,3 +117,6 @@ select * from PrecoAluguer
 select quantia, Pd_ID from PrecoAluguer
 where data >= ALL (select * from PrecoAluguer
 					select quantia, Pd_ID from PrecoAluguer where Pd_ID=1)
+
+
+Update Inventario Set Descricao='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nunc orci, tincidunt id augue sodales, finibus ultricies nibh. Donec metus eros, convallis sit amet tincidunt eget, dictum sed risus. Suspendisse leo mi, vulputate ac consequat tempus, aliquam eget sapien. Vestibulum quis sem orci. Phasellus mi purus, consequat ac sem sit amet, congue convallis sapien.', DescEstado='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nunc orci, tincidunt id augue sodales, finibus ultricies nibh. Donec metus eros, convallis sit amet tincidunt eget, dictum sed risus. '

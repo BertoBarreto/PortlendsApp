@@ -76,7 +76,7 @@ class CategoryCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline3,
                       maxLines: 1,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     AutoSizeText(

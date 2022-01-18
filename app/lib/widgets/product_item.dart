@@ -26,38 +26,35 @@ class ProductItem extends StatelessWidget {
       onTap: () => Navigator.pushNamed(context, '/produto_info', arguments: prodId),
       child: Row(
         children: [
-          Container(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-              child: Image.network(
-                imageURl,
-                fit: BoxFit.fitWidth,
-                height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.17,
-                width:
-                    (mediaQuery.size.width - mediaQuery.padding.left - mediaQuery.padding.right) *
-                        0.43,
-                loadingBuilder:
-                    (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: SizedBox(
-                      height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.17,
-                      width: mediaQuery.size.width * 0.43,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
+          ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+            child: Image.network(
+              imageURl,
+              fit: BoxFit.fitWidth,
+              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.17,
+              width: (mediaQuery.size.width - mediaQuery.padding.left - mediaQuery.padding.right) *
+                  0.43,
+              loadingBuilder:
+                  (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: SizedBox(
+                    height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.17,
+                    width: mediaQuery.size.width * 0.43,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
           Container(
@@ -82,8 +79,11 @@ class ProductItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    FavButton(),
-                    GreenButton(text: 'Ver Mais'),
+                    const FavButton(),
+                    GreenButton(
+                      text: 'Ver Mais',
+                      onTap: () => Navigator.pushNamed(context, '/produto_info', arguments: prodId),
+                    ),
                   ],
                 )
               ],

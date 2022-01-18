@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:async/async.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,12 +14,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -85,9 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         value: (i, v) => i,
                         label: (i, v) => v,
                       ),
-                      choiceStyle: C2ChoiceStyle(
+                      choiceStyle: const C2ChoiceStyle(
                         color: Colors.red,
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                     ),
                   ),
@@ -113,9 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         value: (i, v) => i,
                         label: (i, v) => v,
                       ),
-                      choiceStyle: C2ChoiceStyle(
+                      choiceStyle: const C2ChoiceStyle(
                         color: Colors.purple,
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       wrapped: true,
                     ),
@@ -124,15 +128,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: 'Multiplos Choices',
                     child: ChipsChoice<String>.multiple(
                       value: tags,
-                      onChanged: (val) => {print(tags), setState(() => tags = val)},
+                      onChanged: (val) => {setState(() => tags = val)},
                       choiceItems: C2Choice.listFrom<String, String>(
                         source: options,
                         value: (i, v) => v,
                         label: (i, v) => v,
                       ),
-                      choiceStyle: C2ChoiceStyle(
+                      choiceStyle: const C2ChoiceStyle(
                         color: Colors.orange,
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       wrapped: true,
                       textDirection: TextDirection.rtl,
@@ -149,9 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: (i, v) => v,
                         disabled: (i, v) => [0, 2, 5].contains(i),
                       ),
-                      choiceStyle: C2ChoiceStyle(
+                      choiceStyle: const C2ChoiceStyle(
                         color: Colors.black,
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       wrapped: true,
                     ),
@@ -167,9 +171,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: (i, v) => v,
                         hidden: (i, v) => ['Science', 'Politics', 'News', 'Tech'].contains(v),
                       ),
-                      choiceStyle: C2ChoiceStyle(
+                      choiceStyle: const C2ChoiceStyle(
                         color: Colors.yellow,
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       wrapped: true,
                     ),
@@ -179,15 +183,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ChipsChoice<int>.single(
                       value: tag,
                       onChanged: (val) => setState(() => tag = val),
-                      choiceStyle: C2ChoiceStyle(
+                      choiceStyle: const C2ChoiceStyle(
                         color: Colors.blue,
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       choiceItems: C2Choice.listFrom<int, String>(
                         source: options,
                         value: (i, v) => i,
                         label: (i, v) => v,
-                      )..insert(0, C2Choice<int>(value: -1, label: 'All')),
+                      )..insert(0, const C2Choice<int>(value: -1, label: 'All')),
                     ),
                   ),
                   Content(
@@ -199,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         source: options,
                         value: (i, v) => i,
                         label: (i, v) => v,
-                      )..insert(0, C2Choice<int>(value: -1, label: 'All')),
+                      )..insert(0, const C2Choice<int>(value: -1, label: 'All')),
                       choiceStyle: C2ChoiceStyle(
                         color: Colors.black,
                         showCheckmark: false,
@@ -230,7 +234,7 @@ class Content extends StatefulWidget {
   final String? title;
   final Widget? child;
 
-  Content({
+  const Content({
     Key? key,
     required this.title,
     required this.child,

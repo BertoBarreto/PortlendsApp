@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:portlends/screens/sub_screens/categories_screen.dart';
 import 'package:portlends/screens/main_screens/main_screen.dart';
 import 'package:portlends/screens/sub_screens/product_info_screen.dart';
 import 'package:portlends/screens/sub_screens/products_screen.dart';
@@ -9,23 +8,7 @@ void main() {
     MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: Color.fromRGBO(245, 245, 245, 1),
-          onPrimary: Color.fromRGBO(45, 12, 87, 1),
-          secondary: Color.fromRGBO(11, 206, 131, 1),
-          onSecondary: Color.fromRGBO(245, 245, 245, 1),
-          primaryVariant: Color.fromRGBO(11, 206, 131, 1),
-          secondaryVariant: Color.fromRGBO(226, 203, 255, 1),
-          surface: Color.fromRGBO(255, 255, 255, 1),
-          onSurface: Color.fromRGBO(45, 12, 87, 1),
-          background: Color.fromRGBO(245, 245, 245, 1),
-          onBackground: Color.fromRGBO(45, 12, 87, 1),
-          error: Colors.red,
-          onError: Color.fromRGBO(255, 255, 255, 1),
-        ),
-        primaryColor: Color.fromRGBO(11, 206, 131, 1),
-        accentColor: Color.fromRGBO(45, 12, 87, 1),
+        primaryColor: const Color.fromRGBO(11, 206, 131, 1),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
@@ -38,13 +21,13 @@ void main() {
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
-            borderSide: BorderSide(color: Colors.red),
+            borderSide: const BorderSide(color: Colors.red),
           ),
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Color.fromRGBO(114, 3, 255, 1),
         ),
-        textSelectionTheme: TextSelectionThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color.fromRGBO(11, 206, 131, 1),
           selectionHandleColor: Color.fromRGBO(11, 206, 131, 1),
           selectionColor: Color.fromRGBO(11, 206, 131, 0.3),
@@ -85,11 +68,26 @@ void main() {
           ),
         ),
         backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color.fromRGBO(245, 245, 245, 1),
+          onPrimary: Color.fromRGBO(45, 12, 87, 1),
+          secondary: Color.fromRGBO(11, 206, 131, 1),
+          onSecondary: Color.fromRGBO(245, 245, 245, 1),
+          primaryVariant: Color.fromRGBO(11, 206, 131, 1),
+          secondaryVariant: Color.fromRGBO(226, 203, 255, 1),
+          surface: Color.fromRGBO(255, 255, 255, 1),
+          onSurface: Color.fromRGBO(45, 12, 87, 1),
+          background: Color.fromRGBO(245, 245, 245, 1),
+          onBackground: Color.fromRGBO(45, 12, 87, 1),
+          error: Colors.red,
+          onError: Color.fromRGBO(255, 255, 255, 1),
+        ).copyWith(secondary: const Color.fromRGBO(45, 12, 87, 1)),
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => MainScreen(),
-        '/produtos': (context) => ProductsScreen(),
+        '/': (context) => const MainScreen(),
+        '/produtos': (context) => const ProductsScreen(),
         '/produto_info': (context) => const ProductInfoScreen(),
       },
     ),

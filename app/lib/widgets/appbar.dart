@@ -10,7 +10,7 @@ class MyAppBar extends StatelessWidget {
     required this.innerBoxIsScrolled,
     required this.height,
     required this.onTap,
-    List<Widget>? this.bottom,
+    this.bottom,
   }) : super(key: key);
 
   @override
