@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InputTextBox extends StatelessWidget {
   final String hint;
   final void Function(String)? onSubmited;
+  final void Function(String)? onChanged;
   final bool isSearch;
   final bool whiteTheme;
   final bool isPassWd;
@@ -11,6 +12,7 @@ class InputTextBox extends StatelessWidget {
       {Key? key,
       required this.hint,
       this.onSubmited,
+      this.onChanged,
       this.isSearch = false,
       this.whiteTheme = false,
       this.isPassWd = false})
@@ -42,6 +44,7 @@ class InputTextBox extends StatelessWidget {
           hintStyle: TextStyle(color: Colors.white),
         ),
         onSubmitted: onSubmited,
+        onChanged: onChanged,
       ),
     );
   }

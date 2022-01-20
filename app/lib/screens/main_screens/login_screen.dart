@@ -1,12 +1,27 @@
+import 'dart:convert';
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:portlends/widgets/green_button.dart';
 import 'package:portlends/widgets/search_bar.dart';
+import 'package:crypto/crypto.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
+    String _userEmail = '';
+    String _userPassword = '';
+
+    void encodePassword() {
+      final data = utf8.encode(_userPassword);
+      print(sha1.convert(data).toString());
+      _userPassword = sha512.convert(data).toString();
+    }
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -24,7 +39,7 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Center(
             child: SizedBox(
-              height: 300,
+              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.37,
               child: Card(
                 elevation: 0,
                 shape: RoundedRectangleBorder(
@@ -46,17 +61,22 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: 20),
                       const InputTextBox(hint: 'email'),
                       const SizedBox(height: 15),
-                      const InputTextBox(
+                      InputTextBox(
                         hint: 'password',
                         isPassWd: true,
+                        onChanged: (text) {
+                          _userPassword = text;
+                        },
                       ),
                       const SizedBox(height: 15),
                       SizedBox(
-                        height: 50,
-                        width: 100,
-                        child: Expanded(
-                          child: GreenButton(text: 'Login', onTap: () {}),
-                        ),
+                        height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.05,
+                        width: mediaQuery.size.width * 0.25,
+                        child: GreenButton(
+                            text: 'Login',
+                            onTap: () {
+                              encodePassword();
+                            }),
                       ),
                     ],
                   ),
