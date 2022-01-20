@@ -38,7 +38,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               SizedBox(
                 height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
               ),
-              SearchBar(
+              InputTextBox(
                 hint: 'Pesquisar Categoria',
                 onSubmited: (text) {},
               )

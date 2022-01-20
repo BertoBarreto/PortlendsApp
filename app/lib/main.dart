@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portlends/screens/main_screens/login_screen.dart';
 import 'package:portlends/screens/main_screens/main_screen.dart';
 import 'package:portlends/screens/sub_screens/product_info_screen.dart';
 import 'package:portlends/screens/sub_screens/products_screen.dart';
@@ -84,9 +85,10 @@ void main() {
           onError: Color.fromRGBO(255, 255, 255, 1),
         ).copyWith(secondary: const Color.fromRGBO(45, 12, 87, 1)),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => const MainScreen(),
+        '/login': (context) => const LoginScreen(),
         '/produtos': (context) => const ProductsScreen(),
         '/produto_info': (context) => const ProductInfoScreen(),
       },

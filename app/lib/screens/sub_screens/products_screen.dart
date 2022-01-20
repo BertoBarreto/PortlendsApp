@@ -52,7 +52,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       SizedBox(
                         height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
                       ),
-                      const SearchBar(
+                      const InputTextBox(
                         hint: 'Pesquisar Produtos',
                       ),
                       SizedBox(
