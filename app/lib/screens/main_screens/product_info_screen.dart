@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portlends/models/product.dart';
 import 'package:portlends/providers/httpService.dart';
-import 'package:portlends/widgets/fav_button.dart';
+import 'package:portlends/widgets/white_button.dart';
 import 'package:portlends/widgets/green_button.dart';
 
 class ProductInfoScreen extends StatelessWidget {
@@ -147,7 +147,12 @@ class ProductInfoScreen extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const FavButton(),
+                                    const WhiteButton(
+                                      icon: Icon(
+                                        Icons.favorite_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                                     const SizedBox(
                                       width: 30,
                                     ),

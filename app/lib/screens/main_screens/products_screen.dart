@@ -24,6 +24,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     final args = ModalRoute.of(context)!.settings.arguments as CategoryArguments;
     final mediaQuery = MediaQuery.of(context);
     final HttpService httpService = HttpService();
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: FutureBuilder(
@@ -116,6 +117,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             cost: _products[index].cost,
                             unit: _products[index].unit,
                             imageURl: _products[index].imageURl,
+                            isFav: _products[index].isFav,
                           );
                         },
                       ),
@@ -130,22 +132,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
             return const Text('Getting Data');
           }
         },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: 'Categorias',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Obtidos',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Perfil',
-          ),
-        ],
       ),
     );
   }

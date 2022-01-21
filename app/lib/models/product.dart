@@ -8,6 +8,7 @@ class Product {
   final int pdId;
   final String gradeDesc;
   final bool disponibility;
+  final bool isFav;
 
   const Product({
     required this.pdId,
@@ -19,5 +20,6 @@ class Product {
     required this.grade,
     required this.gradeDesc,
     required this.disponibility,
+    required this.isFav,
   });
 }

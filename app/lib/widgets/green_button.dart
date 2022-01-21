@@ -13,7 +13,8 @@ class GreenButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
-      child: Text(text),
+      child:
+          Text(text, style: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.white)),
       style: ButtonStyle(
         maximumSize: MaterialStateProperty.all(const Size(300, 50)),
         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),

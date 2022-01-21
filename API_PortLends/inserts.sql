@@ -51,31 +51,55 @@ DBCC CHECKIDENT (Users, RESEED, 0);
 GO
 
 INSERT INTO Users
-VALUES ('Antonio Esteves',GETDATE(),668989899,'Rua da esquina',4900,'teste123','antonioesteves@gmail.com')
+VALUES ('Antonio Esteves','1984-01-18 10:29:57.400',668989899,'Rua da esquina',4900,'teste123','antonioesteves@gmail.com')
 
 INSERT INTO Users
-VALUES ('Roberto Barreto',GETDATE(),668989899,'Rua da esquina',4900,'teste123','robertofmbarreto@gmail.com')
+VALUES ('Roberto Barreto','2002-04-09 10:29:57.400','Rua da esquina',4900,'teste123','robertofmbarreto@gmail.com')
 
 INSERT INTO Users
-VALUES ('Maria Madalena',GETDATE(),668989899,'Rua da esquina',4900,'teste123','robertofmbarreto@gmail.com')
+VALUES ('Maria Madalena','2001-01-18 10:29:57.400',668989899,'Rua da esquina',4900,'teste123','robertofmbarreto@gmail.com')
 
+INSERT INTO Users
+VALUES (@userName,@userBirthDate,@userContact,@userStreet,@userPC,@userPassword,@userEmail)
+
+EXEC addUser @userName ='teste',@userBirthDate = '2001-01-18 10:29:57.400',
+  @userContact =1,@userStreet ='teste',@userPC =4900
+  ,@userPassword ='teste',@userEmail ='teste'
+
+SELECT Users.UID,contato,Nome,Floor((DATEDIFF(day,dt_nasc,GETDATE())/365)),email,rua,CP from Users where email=robertofmbarreto@gmail.com
+
+SELECT Users.UID,contato,Nome,dt_nasc,email,rua,CP from Users
+
+select Inventario.Nome, Inventario.Pd_ID,Inventario.Descricao,Inventario.InfoAdicional,Inventario.DescEstado, ImagensProdutos.ImgUrl from Inventario 
+left join ImagensProdutos on ImagensProdutos.Pd_ID = Inventario.Pd_ID 
+join Users on Users.UID=Inventario.UID
+
+DELETE users WHERE Users.uid = 2
+
+SELECT password, uid FROM Users WHERE email='robertofmbarreto@gmail.com'
+EXEC getUsersPasswdByEmail @email = 'robertofmbarreto@gmail.com'
+EXEC getUsersById @id=2
+
+UPDATE Users
+SET dt_nasc = '2002-04-09 10:29:57.400'
+WHERE uid=2
 
 DBCC CHECKIDENT (Inventario, RESEED, 0);
 GO
 
-select*from Inventario
 INSERT INTO Inventario Values(2,5,5,1,'Vestido de Noiva','Um simples vestido de noiva','Tamanho S','Está praticamente como novo',1)
 INSERT INTO Inventario Values(2,5,5,1,'Fato de Noivo','Um simples fato de noivo','Tamanho M','Está praticamente como novo',0)
 INSERT INTO Inventario Values(2,5,5,8,'Sobretudo','Um simples Sobretudo','Tamanho S','Está praticamente como novo',1)
 
-
+UPDATE Inventario Set Disponibilidade=1
+select*from Inventario
 
 Insert into ImagensProdutos VALUES(1,'https://firebasestorage.googleapis.com/v0/b/portlends-ad27b.appspot.com/o/Produtos%2F1%2Fnoiva.jpg?alt=media&token=efba4ba3-83f8-429a-878a-462051b9efd5')
 Insert into ImagensProdutos VALUES(2,'https://firebasestorage.googleapis.com/v0/b/portlends-ad27b.appspot.com/o/Produtos%2F2%2Fnoivo.jpg?alt=media&token=3709bbeb-55b6-4fa8-ab33-1fdd99a0ed89')
 Insert into ImagensProdutos VALUES(3,'https://firebasestorage.googleapis.com/v0/b/portlends-ad27b.appspot.com/o/Produtos%2F3%2Fsobretudo.jpg?alt=media&token=180ea27a-cdd6-48a8-8842-1ad0d808be72')
 
 
-select * from PrecoAluguer
+select * from Inventario
 Insert into PrecoAluguer VALUES(GETDATE(),15,'\h',1)
 Insert into PrecoAluguer VALUES(GETDATE(),16,'\h',1)
 Insert into PrecoAluguer VALUES(GETDATE(),17,'\h',1)
@@ -122,3 +146,14 @@ where data >= ALL (select * from PrecoAluguer
 SET ANSI_WARNINGS OFF;
 Update Inventario Set Descricao='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nunc orci, tincidunt id augue sodales, finibus ultricies nibh. Donec metus eros, convallis sit amet tincidunt eget, dictum sed risus. Suspendisse leo mi, vulputate ac consequat tempus, aliquam eget sapien. Vestibulum quis sem orci. Phasellus mi purus, consequat ac sem sit amet, congue convallis sapien.', DescEstado='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nunc orci, tincidunt id augue sodales, finibus ultricies nibh. Donec metus eros, convallis sit amet tincidunt eget, dictum sed risus. '
 SET ANSI_WARNINGS ON;
+
+
+select Categorias.Categoria_ID,Categorias.imageUrl,Categorias.Descricao, count(A.Pd_ID) as contagem from Categorias
+	left join (select * from Inventario where Inventario.Disponibilidade>=0) A on A.CategoriaID=Categorias.Categoria_ID
+	group by Categorias.Categoria_ID,Categorias.Descricao,Categorias.imageUrl
+
+
+	select * from favoritos
+
+
+

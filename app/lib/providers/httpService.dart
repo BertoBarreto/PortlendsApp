@@ -5,10 +5,112 @@ import 'package:http/http.dart' as http;
 import 'package:portlends/models/category.dart';
 import 'package:portlends/models/product.dart';
 import 'package:portlends/models/subcategory.dart';
+import 'package:portlends/models/user.dart';
 
 class HttpService {
   final String ip = '192.168.1.65';
   //final String ip = '192.168.182.21';
+
+  Future<Map<String, dynamic>> login(String password, String email) async {
+    String url = "http://$ip:3000/api/v1/login";
+    String auth = '$email:$password';
+
+    final res = await http.get(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': auth
+      },
+    );
+    if (res.statusCode == 200) {
+      final msg = jsonDecode(res.body)['message'];
+      final uid = jsonDecode(res.body)['UID'];
+      return {'msg': msg, 'auth': true, 'UID': uid};
+    } else {
+      final msg = jsonDecode(res.body)['message'];
+      return {'msg': msg, 'auth': false};
+    }
+  }
+
+  Future<Map<String, dynamic>> registerUser({
+    required String userName,
+    required String userEmail,
+    required String userPassword,
+    required String userStreet,
+    required String userBirthDate,
+    required int userPC,
+    required int userContact,
+  }) async {
+    String url = "http://$ip:3000/api/v1/users/";
+
+    print(userPC);
+    final res = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'userName': userName,
+          'userEmail': userEmail,
+          'userPassword': userPassword,
+          'userStreet': userStreet,
+          'userPC': userPC,
+          'userContact': userContact,
+          'userBirthDate': userBirthDate,
+        }));
+
+    if (res.statusCode == 200) {
+      final body = jsonDecode(res.body)['result'];
+      User.fromJson(body);
+      return {"msg": 'Registo Efetuado com sucesso', 'auth': true};
+    } else {
+      if (res.body != '') {
+        throw res.body;
+      } else {
+        throw "Ocorreu um erro a registar o utilizador";
+      }
+    }
+  }
+
+  Future<Map<String, dynamic>> updateUserName(String nome, int contato) async {
+    String url = "http://$ip:3000/api/v1/users/${User.userId}";
+
+    if (nome.isEmpty || contato < 100000000) {
+      throw "Ocorreu um erro na atualizaçao do utilizador";
+    }
+    final res = await http.put(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'nome': nome,
+          'contato': contato,
+        }));
+
+    if (res.statusCode == 200) {
+      final body = jsonDecode(res.body)['result'];
+
+      User.fromJson(body, update: true);
+      return {'status': true};
+    } else {
+      print(res.body);
+      throw "Ocorreu um erro na atualizaçao do utilizador";
+    }
+  }
+
+  Future<void> getUserData(int userId) async {
+    String url = "http://$ip:3000/api/v1/users/$userId";
+
+    final res = await http.get(Uri.parse(url));
+
+    if (res.statusCode == 200) {
+      final body = jsonDecode(res.body)['result'];
+
+      User.fromJson(body);
+    } else {
+      throw "Ocorreu um erro na obtenção de dados";
+    }
+  }
+
   Future<List<Categoria>> getCategories(String search) async {
     String url = "http://$ip:3000/api/v1/categorias";
 
@@ -28,7 +130,7 @@ class HttpService {
 
       return categories;
     } else {
-      throw "Unable to retrieve posts.";
+      throw "Ocorreu um erro a carregar as categorias";
     }
   }
 
@@ -59,7 +161,7 @@ class HttpService {
 
       return subcategories;
     } else {
-      throw "Unable to retrieve posts.";
+      throw "Ocorreu um erro a carregar as subcategorias";
     }
   }
 
@@ -81,11 +183,81 @@ class HttpService {
         grade: body['EstadoProdutoID'],
         gradeDesc: body['DescEstado'],
         disponibility: body['Disponibilidade'] == 0 ? false : true,
+        isFav: body['FavoritoUid'] != null,
       );
 
       return product;
     } else {
-      throw "Unable to retrieve posts.";
+      throw "Ocorreu um erro a carregar os produtos";
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteProduct(int prodId) async {
+    String url = "http://$ip:3000/api/v1/produto/$prodId";
+
+    final res = await http.delete(Uri.parse(url));
+
+    if (res.statusCode == 200) {
+      return {'status': true};
+    } else {
+      throw "Ocorreu um erro a eliminar o produto";
+    }
+  }
+
+  Future<Map<String, dynamic>> addFav(int prodId) async {
+    String url = "http://$ip:3000/api/v1/users/favoritos";
+
+    final res = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'uid': User.userId,
+          'pdID': prodId,
+        }));
+
+    if (res.statusCode == 200) {
+      return {'status': true};
+    } else {
+      throw "Ocorreu um erro a adicionar o favorito";
+    }
+  }
+
+  Future<Map<String, dynamic>> removeFav(int prodId) async {
+    String url = "http://$ip:3000/api/v1/users/favoritos";
+
+    final res = await http.delete(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'uid': User.userId,
+          'pdID': prodId,
+        }));
+
+    if (res.statusCode == 200) {
+      return {'status': true};
+    } else {
+      throw "Ocorreu um erro a eliminar o Favorito";
+    }
+  }
+
+  Future<List<Product>> getAllUserProducts() async {
+    String url = "http://$ip:3000/api/v1/users/produtos/${User.userId}";
+    final res = await http.get(Uri.parse(url));
+
+    if (res.statusCode == 200) {
+      final body = jsonDecode(res.body)['result'];
+      List<Product> products = [];
+      for (final Map<String, dynamic> item in body) {
+        final pd = await getProduct(item["Pd_ID"]);
+
+        products.add(pd);
+      }
+
+      return products;
+    } else {
+      throw "Ocorreu um erro a carregar os produtos";
     }
   }
 
@@ -106,7 +278,7 @@ class HttpService {
 
       return products;
     } else {
-      throw "Unable to retrieve posts.";
+      throw "Ocorreu um erro a carregar os produtos";
     }
   }
 
@@ -133,7 +305,7 @@ class HttpService {
 
       return products;
     } else {
-      throw "Unable to retrieve posts.";
+      throw "Ocorreu um erro a carregar os produtos";
     }
   }
 }

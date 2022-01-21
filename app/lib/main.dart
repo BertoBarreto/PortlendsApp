@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:portlends/screens/main_screens/login_screen.dart';
 import 'package:portlends/screens/main_screens/main_screen.dart';
-import 'package:portlends/screens/sub_screens/product_info_screen.dart';
-import 'package:portlends/screens/sub_screens/products_screen.dart';
+import 'package:portlends/screens/main_screens/product_info_screen.dart';
+import 'package:portlends/screens/main_screens/products_screen.dart';
 
 void main() {
   runApp(

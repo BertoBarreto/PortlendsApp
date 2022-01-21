@@ -1,6 +1,8 @@
 const db_config = require('../DB_config');
 const sql = require('mssql')
 const queries = require('../events/queries')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 let get_user_by_id = async (req,res)=>{
     let idParam = req.params.id
@@ -10,13 +12,13 @@ let get_user_by_id = async (req,res)=>{
         
         let result = await pool.request()
             .input('idParam', sql.Int, idParam)
-            .query('select * from Users where uid = @idParam')
+            .query(queries.getUserById)
           
         pool.close()
         
         res.status(200).json({
             "message": "Selected user",
-            "result": result.recordsets[0]
+            "result": result.recordset[0]
             })
 
     } catch (err) {
@@ -25,20 +27,130 @@ let get_user_by_id = async (req,res)=>{
     }
 }
 
+let get_user_products = async (req,res)=>{
+    let idParam = req.params.id
+    try {
+        console.log(idParam)
+        let pool = await sql.connect(db_config)
+        
+        let result = await pool.request()
+            .input('idParam', idParam)
+            .query(queries.getUserProducts)
+          
+        pool.close()
+        console.log(result.recordset)
+        res.status(200).json({
+            "message": "Selected products",
+            "result": result.recordset
+            })
+console.log('aqui')
+    } catch (err) {
+        
+        res.status(500).send(err)
+    }
+}
+
+
+let register_user = async(req,res)=>{
+    let {userName,
+        userEmail,
+        userPassword,
+        userStreet,
+        userPC,
+        userContact,
+        userBirthDate} = req.body
+        try {
+            let pool = await sql.connect(db_config)
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const pWD = bcrypt.hashSync(userPassword, salt);
+
+
+        let result = await pool.request()
+            .input('userName', userName)
+            .input('userEmail', userEmail)
+            .input('userPassword', pWD)
+            .input('userStreet', userStreet)
+            .input('userPC', userPC)
+            .input('userContact', userContact)
+            .input('userBirthDate', userBirthDate)
+            .query(queries.registerUser)
+        
+        pool.close()
+        console.log(result.recordset[0])
+
+        res.status(200).json({
+            "message": 'Registo efetuado com sucesso',
+            "result":  result.recordset[0]
+            })
+       
+        
+    } catch (err) {
+        
+        res.status(500).send(err)
+    }
+}
+
+
 let update_user = async(req,res)=>{
     let uid = req.params.id
 
-    let {rua,pwd} = req.body
+    let {nome,contato} = req.body
 
     try {
         let pool = await sql.connect(db_config)
         await pool
           .request()
-          .input("ruaParam", sql.VarChar, rua)
-          .input("idParam", sql.Int, uid)
+          .input("nome", nome)
+          .input("contato", contato)
+          .input("idParam", uid)
           .query(queries.updateUserByID);
         pool.close()
-        res.json({ rua, uid });
+        res.status(200).json({
+            "message": 'User atualizado com sucesso',
+            })
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+}
+
+let add_favorite = async(req,res)=>{
+
+    let {uid,pdID} = req.body
+
+    try {
+        let pool = await sql.connect(db_config)
+        let result = await pool
+          .request()
+          .input("uid", uid)
+          .input("pdID", pdID)
+          .query(queries.addProductFav);
+        pool.close()
+        res.status(200).json({
+            "message": 'Produto adicionado com sucesso aos favoritos',
+            })
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+}
+
+let remove_favorite = async(req,res)=>{
+
+    let {uid,pdID} = req.body
+
+    try {
+        let pool = await sql.connect(db_config)
+        let result = await pool
+          .request()
+          .input("uid", uid)
+          .input("pdID", pdID)
+          .query(queries.deleteProductFav);
+
+        pool.close()
+        res.status(200).json({
+            "message": 'Favorito removido com sucesso',
+            })
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -66,31 +178,13 @@ let get_all_users = async(req,res)=>{
     }
 }
 
-let delete_user = async(req,res)=>{
-    
-    try {
-        let pool = await sql.connect(db_config)
-        
-        let result = await pool.request()
-        .input('idParam', sql.Int, req.params.id)
-        .query(queries.deleteUser)
-          
-        pool.close()
-        
-        res.status(200).json({
-            "message": "Selected user",
-            "result":  result.rowsAffected > 0 ? "utilizador eliminado":"nenhum user eliminado"
-        })
-
-    } catch (err) {
-        
-        res.status(500).send(err)
-    }
-}
 
 module.exports={
     get_user_by_id,
     update_user,
     get_all_users,
-    delete_user
+    register_user,
+    get_user_products,
+    remove_favorite,
+    add_favorite
 }
