@@ -43,7 +43,6 @@ class HttpService {
   }) async {
     String url = "http://$ip:3000/api/v1/users/";
 
-    print(userPC);
     final res = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -92,7 +91,6 @@ class HttpService {
       User.fromJson(body, update: true);
       return {'status': true};
     } else {
-      print(res.body);
       throw "Ocorreu um erro na atualizaçao do utilizador";
     }
   }

@@ -10,7 +10,6 @@ module.exports = {
                   ,@userPassword =@userPassword,@userEmail =@userEmail`,
   //?Categories
   getAllCategories: `EXEC getCategories;`,
-  //TODO
   getSearchCategories: `EXEC getCategorySearch @name=@nome`,
   getAllSubCategoriesFromCategory:`EXEC getSubcategories @CategoriaID = @idParam;`,
   getAllCategoryProd: "EXEC getCategoryProducts @CategoriaID = @idParam;",

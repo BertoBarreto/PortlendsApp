@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:portlends/providers/httpService.dart';
@@ -38,7 +36,7 @@ class _ProductItemState extends State<ProductItem> {
     final httpService = HttpService();
     final mediaQuery = MediaQuery.of(context);
 
-    Future<void> add_rm_Favorite() async {
+    Future<void> addRmFavorite() async {
       if (widget.isFav) {
         final resp = await httpService.removeFav(widget.prodId);
         if (resp['status']) {
@@ -119,7 +117,7 @@ class _ProductItemState extends State<ProductItem> {
                               widget.isFav ? Icons.favorite : Icons.favorite_outline,
                               color: Colors.grey,
                             ),
-                            onTap: () => add_rm_Favorite(),
+                            onTap: () => addRmFavorite(),
                           )
                         : WhiteButton(
                             text: Text(

@@ -1,13 +1,8 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:portlends/models/user.dart';
 import 'package:portlends/providers/httpService.dart';
 import 'package:portlends/widgets/auth/input_white_field.dart';
 import 'package:portlends/widgets/green_button.dart';
 import 'package:portlends/widgets/round_button.dart';
-import 'package:portlends/widgets/search_bar.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:portlends/widgets/white_button.dart';
 
@@ -130,22 +125,23 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context, Widget? child) {
           return Theme(
             data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.light(
+              colorScheme: const ColorScheme.light(
                 primary: Colors.deepPurple,
                 onPrimary: Colors.white,
                 surface: Colors.white,
               ),
               dialogBackgroundColor: Colors.white,
             ),
-            child: child ?? Text(''),
+            child: child ?? const Text(''),
           );
         },
       );
-      print(selected);
-      if (selected != null && selected != _userBirthDate)
+
+      if (selected != null && selected.toString() != _userBirthDate) {
         setState(() {
           _userBirthDate = selected.toString();
         });
+      }
     }
 
     return Container(
@@ -217,13 +213,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           children: [
                             RoundButton(
-                              icon: Icon(Icons.edit),
+                              icon: const Icon(Icons.edit),
                               size: 50,
                               onTap: () {
                                 selectDate();
                               },
                             ),
-                            SizedBox(width: 15),
+                            const SizedBox(width: 15),
                             Expanded(
                               child: Container(
                                 height: 50,
@@ -262,7 +258,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             hint: 'codigo postal',
                             onChanged: (text) {
                               _userPC = int.parse(text);
-                              print(_userPC.runtimeType);
                             }),
                         const SizedBox(height: 15),
                         InputWhiteField(

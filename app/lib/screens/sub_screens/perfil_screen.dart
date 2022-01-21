@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portlends/models/category.dart';
 import 'package:portlends/models/user.dart';
 import 'package:portlends/providers/httpService.dart';
 import 'package:portlends/widgets/appbar.dart';
-import 'package:portlends/widgets/category_card.dart';
 import 'package:portlends/widgets/round_button.dart';
 import 'package:portlends/widgets/search_bar.dart';
 
@@ -21,16 +19,6 @@ class _PerfilScreenState extends State<PerfilScreen> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final HttpService httpService = HttpService();
-
-    Future<void> updateUser() async {
-      final resp = await httpService.updateUserName(nome, contato);
-      if (resp['status']) {
-        setState(() {
-          nome = User.nome;
-          contato = User.contato;
-        });
-      }
-    }
 
     return NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -66,15 +54,14 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 Row(
                   children: [
                     Text(nome, style: Theme.of(context).textTheme.bodyText1),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     RoundButton(
                       size: 40,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.edit,
                         size: 20,
                       ),
                       onTap: () {
-                        final _userEmail = '';
                         showDialog(
                           barrierDismissible: true,
                           context: context,
@@ -83,12 +70,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               actions: [
                                 RoundButton(
                                   size: 50,
-                                  icon: Icon(Icons.cancel_outlined),
+                                  icon: const Icon(Icons.cancel_outlined),
                                   onTap: () => Navigator.of(context).pop(),
                                 ),
                                 RoundButton(
                                   size: 50,
-                                  icon: Icon(Icons.done),
+                                  icon: const Icon(Icons.done),
                                   onTap: () {
                                     setState(() {
                                       httpService.updateUserName(nome, contato);
@@ -115,32 +102,31 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text('Email', style: Theme.of(context).textTheme.headline2),
                 Text(User.email, style: Theme.of(context).textTheme.bodyText1),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text('Data de Nascimento', style: Theme.of(context).textTheme.headline2),
                 Text('${User.idade} anos', style: Theme.of(context).textTheme.bodyText1),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text('Contato Telefónico', style: Theme.of(context).textTheme.headline2),
                 Row(
                   children: [
                     Text(contato.toString(), style: Theme.of(context).textTheme.bodyText1),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     RoundButton(
                       size: 40,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.edit,
                         size: 20,
                       ),
                       onTap: () {
-                        final _userEmail = '';
                         showDialog(
                           barrierDismissible: true,
                           context: context,
@@ -149,12 +135,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               actions: [
                                 RoundButton(
                                   size: 50,
-                                  icon: Icon(Icons.cancel_outlined),
+                                  icon: const Icon(Icons.cancel_outlined),
                                   onTap: () => Navigator.of(context).pop(),
                                 ),
                                 RoundButton(
                                   size: 50,
-                                  icon: Icon(Icons.done),
+                                  icon: const Icon(Icons.done),
                                   onTap: () {
                                     setState(() {
                                       httpService.updateUserName(nome, contato);
@@ -182,7 +168,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text('Morada', style: Theme.of(context).textTheme.headline2),

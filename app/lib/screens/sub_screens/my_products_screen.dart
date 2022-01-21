@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:portlends/models/category.dart';
 import 'package:portlends/models/product.dart';
 import 'package:portlends/providers/httpService.dart';
 import 'package:portlends/widgets/appbar.dart';
-import 'package:portlends/widgets/category_card.dart';
 import 'package:portlends/widgets/product_item.dart';
-import 'package:portlends/widgets/search_bar.dart';
 
 class MyProductsScreen extends StatefulWidget {
   const MyProductsScreen({Key? key}) : super(key: key);
@@ -19,10 +16,9 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final HttpService httpService = HttpService();
-    String searchCategorie = '';
 
-    Future<void> deleteProduct(pd_id) async {
-      final resp = await httpService.deleteProduct(pd_id);
+    Future<void> deleteProduct(pdId) async {
+      final resp = await httpService.deleteProduct(pdId);
       if (resp['status']) {
         setState(() {});
       }

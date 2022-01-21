@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class User {
   static int? userUid;
   static String? userNome;
@@ -10,9 +8,9 @@ class User {
   static String? userPC;
 
   static fromJson(Map<String, dynamic> json, {update = false}) {
-    if (userUid != null && !update)
+    if (userUid != null && !update) {
       throw 'User data cannot be set after loading user data';
-    else {
+    } else {
       userUid = json['UID'];
       userNome = json['Nome'];
       userContato = json['contato'];

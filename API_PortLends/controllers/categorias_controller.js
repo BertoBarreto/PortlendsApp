@@ -33,7 +33,7 @@ let get_search_categories = async (req,res)=>{
         let result = await pool.request()
             .input('nome', sql.VarChar, pesquisa)
             .query(queries.getSearchCategories)
-        console.log( result.recordset)
+        
         pool.close()
         
         res.status(200).json({

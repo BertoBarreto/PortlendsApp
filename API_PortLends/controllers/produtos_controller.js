@@ -7,7 +7,7 @@ let get_search_produtos_categoria = async (req,res)=>{
     let{pesquisa}=req.body
     try {
         pesquisa = pesquisa + '%'
-        console.log(pesquisa)
+        
         let pool = await sql.connect(db_config)
         
         let result = await pool.request()
@@ -16,7 +16,7 @@ let get_search_produtos_categoria = async (req,res)=>{
             .query(queries.getSearchCategoryProd)
           
         pool.close()
-        console.log(result.recordset)
+        
         
         res.status(200).json({
             "message": "Selected products",
@@ -118,7 +118,7 @@ let get_produtos_categoria_subcategoria = async (req,res)=>{
             })
 
     } catch (err) {
-        console.log(err)
+        
         res.status(500).send(err)
     }
 }
@@ -146,7 +146,7 @@ let get_search_produtos_categoria_subcategoria = async (req,res)=>{
             })
 
     } catch (err) {
-        console.log(err)
+        
         res.status(500).send(err)
     }
 }

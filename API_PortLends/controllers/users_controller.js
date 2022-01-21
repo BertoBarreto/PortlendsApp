@@ -7,7 +7,7 @@ const saltRounds = 10;
 let get_user_by_id = async (req,res)=>{
     let idParam = req.params.id
     try {
-        console.log(idParam)
+        
         let pool = await sql.connect(db_config)
         
         let result = await pool.request()
@@ -30,7 +30,7 @@ let get_user_by_id = async (req,res)=>{
 let get_user_products = async (req,res)=>{
     let idParam = req.params.id
     try {
-        console.log(idParam)
+        
         let pool = await sql.connect(db_config)
         
         let result = await pool.request()
@@ -38,12 +38,12 @@ let get_user_products = async (req,res)=>{
             .query(queries.getUserProducts)
           
         pool.close()
-        console.log(result.recordset)
+        
         res.status(200).json({
             "message": "Selected products",
             "result": result.recordset
             })
-console.log('aqui')
+
     } catch (err) {
         
         res.status(500).send(err)
@@ -76,7 +76,7 @@ let register_user = async(req,res)=>{
             .query(queries.registerUser)
         
         pool.close()
-        console.log(result.recordset[0])
+        
 
         res.status(200).json({
             "message": 'Registo efetuado com sucesso',
