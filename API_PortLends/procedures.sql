@@ -12,18 +12,19 @@ BEGIN
 	ELSE
 	COMMIT TRANSACTION
 
+
 -- update user
-CREATE PROCEDURE updateUser @userName varchar(255), @userContact int
+CREATE PROCEDURE updateUser @userName varchar(255), @userContact int, @uid int
 AS
 BEGIN 
 	TRANSACTION
-	Update Users
-		SET Users.Nome=@userName,Users.contato =@userContact
-	SELECT Users.UID,contato,Nome,Floor((DATEDIFF(day,dt_nasc,GETDATE())/365)) as idade,email,rua,CP from Users where uid >= ALL(SELECT Users.UID from users)
+	Update Users SET Users.Nome=@userName,Users.contato =@userContact where uid = @uid
+	SELECT Users.UID,contato,Nome,Floor((DATEDIFF(day,dt_nasc,GETDATE())/365)) as idade,email,rua,CP from Users where uid = @uid
 	IF @@ERROR <>0
 	ROLLBACK TRANSACTION
 	ELSE
 	COMMIT TRANSACTION
+
 -- get users
 CREATE PROCEDURE getUsers
 AS
@@ -87,13 +88,27 @@ BEGIN
 
 
 -- get all category products
--- select * from Inventario left join ImagensProdutos on ImagensProdutos.Pd_ID = Inventario.Pd_ID LEFT JOIN PrecoAluguer on PrecoAluguer.Pd_ID=Inventario.Pd_ID WHERE CategoriaID = @CategoriaID AND PrecoAluguer.data >= ALL (select data from PrecoAluguer)
 
 CREATE PROCEDURE getCategoryProducts @CategoriaID int
 AS
 BEGIN 
 	TRANSACTION
 	select Pd_ID from Inventario where CategoriaID = @CategoriaID AND Inventario.Disponibilidade>=0
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
+-- get category search
+
+CREATE PROCEDURE getCategorySearch @name varchar(255)
+AS
+BEGIN 
+	TRANSACTION
+	select Categorias.Categoria_ID,Categorias.imageUrl,Categorias.Descricao, count(A.Pd_ID) as contagem from Categorias
+	left join (select * from Inventario where Inventario.Disponibilidade>=0) A on A.CategoriaID=Categorias.Categoria_ID
+	where Categorias.Descricao LIKE @name
+	group by Categorias.Categoria_ID,Categorias.Descricao,Categorias.imageUrl
 	IF @@ERROR <>0
 	ROLLBACK TRANSACTION
 	ELSE
@@ -123,6 +138,18 @@ BEGIN
 	LEFT JOIN PrecoAluguer on PrecoAluguer.Pd_ID=Inventario.Pd_ID 
 	LEFT JOIN Favoritos on Favoritos.Pd_ID=Inventario.Pd_ID
 	WHERE Inventario.Pd_ID=@pdID AND PrecoAluguer.data >= ALL (select data from PrecoAluguer Where Pd_ID=@pdID) AND Inventario.Disponibilidade>=0
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
+--get user products
+
+CREATE PROCEDURE getUserProducts @uid int
+AS
+BEGIN 
+	TRANSACTION
+	select Pd_ID from Inventario join Users on Users.UID=Inventario.UID Where Users.uid=@uid AND Inventario.Disponibilidade>=0
 	IF @@ERROR <>0
 	ROLLBACK TRANSACTION
 	ELSE

@@ -2,6 +2,33 @@ const db_config = require('../DB_config');
 const sql = require('mssql')
 const queries = require('../events/queries')
 
+let get_search_produtos_categoria = async (req,res)=>{
+    let idParam = req.params.id
+    let{pesquisa}=req.body
+    try {
+        pesquisa = pesquisa + '%'
+        console.log(pesquisa)
+        let pool = await sql.connect(db_config)
+        
+        let result = await pool.request()
+            .input('idParam', idParam)
+            .input('name', pesquisa)
+            .query(queries.getSearchCategoryProd)
+          
+        pool.close()
+        console.log(result.recordset)
+        
+        res.status(200).json({
+            "message": "Selected products",
+            "result": result.recordset
+            })
+
+    } catch (err) {
+        
+        res.status(500).send(err)
+    }
+}
+
 let get_produtos_categoria = async (req,res)=>{
     let idParam = req.params.id
     try {
@@ -96,9 +123,39 @@ let get_produtos_categoria_subcategoria = async (req,res)=>{
     }
 }
 
+let get_search_produtos_categoria_subcategoria = async (req,res)=>{
+    let {categoriaID, subcategoriaID,pesquisa} = req.body
+    try {
+ 
+        let pool = await sql.connect(db_config)
+
+        pesquisa =  pesquisa + '%'
+        let result = await pool.request()
+            .input("categoriaId",  categoriaID)
+            .input("subcategoriaId",  subcategoriaID)
+            .input("name", pesquisa)
+            .query(queries.getSearchCategorySubcategoryProd)
+        
+      
+        pool.close()
+
+
+        res.status(200).json({
+            "message": "Selected Products",
+            "result": result.recordset
+            })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).send(err)
+    }
+}
+
 module.exports={
     get_produtos_categoria,
     get_produtos_categoria_subcategoria,
     get_produto,
-    delete_produto
+    delete_produto,
+    get_search_produtos_categoria,
+    get_search_produtos_categoria_subcategoria
 }

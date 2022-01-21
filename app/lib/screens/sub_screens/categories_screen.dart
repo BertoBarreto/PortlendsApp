@@ -13,11 +13,11 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  String searchCategorie = '';
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final HttpService httpService = HttpService();
-    String searchCategorie = '';
 
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -40,7 +40,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               ),
               InputTextBox(
                 hint: 'Pesquisar Categoria',
-                onSubmited: (text) {},
+                onChanged: (text) {
+                  setState(() {
+                    searchCategorie = text;
+                  });
+                },
               )
             ],
           ),

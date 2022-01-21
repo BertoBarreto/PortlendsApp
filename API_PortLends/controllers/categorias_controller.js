@@ -27,13 +27,13 @@ let get_search_categories = async (req,res)=>{
     let {pesquisa} = req.body
     try {
 
-        pesquisa = '%' + pesquisa + '%'
+        pesquisa = pesquisa + '%'
         let pool = await sql.connect(db_config)
         
         let result = await pool.request()
             .input('nome', sql.VarChar, pesquisa)
             .query(queries.getSearchCategories)
-          
+        console.log( result.recordset)
         pool.close()
         
         res.status(200).json({

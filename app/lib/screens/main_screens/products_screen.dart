@@ -18,7 +18,7 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
   int tag = -1;
-
+  String search = '';
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as CategoryArguments;
@@ -53,15 +53,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       SizedBox(
                         height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
                       ),
-                      const InputTextBox(
+                      InputTextBox(
                         hint: 'Pesquisar Produtos',
+                        onChanged: (text) {
+                          setState(() {
+                            search = text;
+                          });
+                        },
                       ),
                       SizedBox(
                         height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.02,
                       ),
                       ChipsChoice<int>.single(
                         value: tag,
-                        onChanged: (val) => setState(() => tag = val),
+                        onChanged: (val) {
+                          setState(() => tag = val);
+                          setState(() {
+                            search = '';
+                          });
+                        },
                         choiceItems: C2Choice.listFrom<int, String>(
                           source: subcategories.getFormatedStrings(),
                           value: (i, v) => subcategories.subcategorias[i].subcategoriaId,
@@ -95,8 +105,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
               },
               body: FutureBuilder(
                 future: tag >= 0
-                    ? httpService.getProductsSubCategory(args.categoryID, tag)
-                    : httpService.getAllProducts(args.categoryID),
+                    ? httpService.getProductsSubCategory(args.categoryID, tag, search)
+                    : httpService.getAllProducts(args.categoryID, search),
                 builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasData) {
                     List<Product> _products = snapshot.requireData;

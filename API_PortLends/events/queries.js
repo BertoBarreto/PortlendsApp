@@ -1,21 +1,22 @@
 module.exports = {
   //?Users
-  updateUserByID: "UPDATE Users SET Nome=@nome,contato=@contato WHERE uid=@idParam",
+  updateUserByID: "EXEC updateUser @userName=@nome,@userContact=@contato,@uid=@idParam",
   getAllUsers: "EXEC getUsers;",
   getUserById: "EXEC getUsersById @uid=@idParam;",
   getUserByEmail: "EXEC getUsersPasswdByEmail @email = @email",
-  getUserProducts: `select Pd_ID from Inventario 
-                    join Users on Users.UID=Inventario.UID Where Users.uid=@idParam AND Inventario.Disponibilidade>=0`,
+  getUserProducts: "EXEC getUserProducts @uid=@idParam",
   registerUser:`EXEC addUser @userName =@userName,@userBirthDate = @userBirthDate,
-  @userContact =@userContact,@userStreet =@userStreet,@userPC =@userPC
-  ,@userPassword =@userPassword,@userEmail =@userEmail`,
+                  @userContact =@userContact,@userStreet =@userStreet,@userPC =@userPC
+                  ,@userPassword =@userPassword,@userEmail =@userEmail`,
   //?Categories
   getAllCategories: `EXEC getCategories;`,
   //TODO
-  getSearchCategories: `select * from Categorias where Categorias.Descricao LIKE @nome`,
+  getSearchCategories: `EXEC getCategorySearch @name=@nome`,
   getAllSubCategoriesFromCategory:`EXEC getSubcategories @CategoriaID = @idParam;`,
   getAllCategoryProd: "EXEC getCategoryProducts @CategoriaID = @idParam;",
+  getSearchCategoryProd: "EXEC getSearchCategoryProducts @CategoriaID = @idParam, @name=@name;",
   getAllCategorySubcategoryProd: "EXEC getSubcategoryProducts @CategoriaID = @categoriaId, @SubcategoriaID = @subcategoriaId;",
+  getSearchCategorySubcategoryProd: "EXEC getSearchSubcategoryProducts @CategoriaID = @categoriaId, @SubcategoriaID = @subcategoriaId, @name=@name;",
   //?Products
   getProduct: "EXEC getProductInfo @pdID=@pdID",
   getPrecoProduct: "SELECT quantia FROM PrecoAluguer WHERE PrecoAluguer.data >= ALL (select data from PrecoAluguer Where Pd_ID=@pdID)",

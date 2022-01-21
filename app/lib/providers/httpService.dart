@@ -112,25 +112,52 @@ class HttpService {
   }
 
   Future<List<Categoria>> getCategories(String search) async {
-    String url = "http://$ip:3000/api/v1/categorias";
+    if (search.isNotEmpty) {
+      String url = "http://$ip:3000/api/v1/categorias/search/";
+      final res = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            'pesquisa': search,
+          }));
 
-    final res = await http.get(Uri.parse(url));
+      if (res.statusCode == 200) {
+        final body = jsonDecode(res.body)['result'];
 
-    if (res.statusCode == 200) {
-      final body = jsonDecode(res.body)['result'];
+        List<Categoria> categories = [];
+        for (final Map<String, dynamic> item in body) {
+          categories.add(Categoria(
+              id: item['Categoria_ID'],
+              amount: item['contagem'],
+              imageUrl: item['imageUrl'],
+              name: item['Descricao']));
+        }
 
-      List<Categoria> categories = [];
-      for (final Map<String, dynamic> item in body) {
-        categories.add(Categoria(
-            id: item['Categoria_ID'],
-            amount: item['contagem'],
-            imageUrl: item['imageUrl'],
-            name: item['Descricao']));
+        return categories;
+      } else {
+        throw "Ocorreu um erro a carregar as categorias";
       }
-
-      return categories;
     } else {
-      throw "Ocorreu um erro a carregar as categorias";
+      String url = "http://$ip:3000/api/v1/categorias";
+      final res = await http.get(Uri.parse(url));
+
+      if (res.statusCode == 200) {
+        final body = jsonDecode(res.body)['result'];
+
+        List<Categoria> categories = [];
+        for (final Map<String, dynamic> item in body) {
+          categories.add(Categoria(
+              id: item['Categoria_ID'],
+              amount: item['contagem'],
+              imageUrl: item['imageUrl'],
+              name: item['Descricao']));
+        }
+
+        return categories;
+      } else {
+        throw "Ocorreu um erro a carregar as categorias";
+      }
     }
   }
 
@@ -261,51 +288,106 @@ class HttpService {
     }
   }
 
-  Future<List<Product>> getAllProducts(int catId) async {
-    String url = "http://$ip:3000/api/v1/produtos/$catId";
+  Future<List<Product>> getAllProducts(int catId, String search) async {
+    if (search.isNotEmpty) {
+      String url = "http://$ip:3000/api/v1/produtos/search/$catId";
 
-    final res = await http.get(Uri.parse(url));
+      final res = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            'pesquisa': search,
+          }));
 
-    if (res.statusCode == 200) {
-      final body = jsonDecode(res.body)['result'];
+      if (res.statusCode == 200) {
+        final body = jsonDecode(res.body)['result'];
 
-      List<Product> products = [];
-      for (final Map<String, dynamic> item in body) {
-        final pd = await getProduct(item["Pd_ID"]);
+        List<Product> products = [];
+        for (final Map<String, dynamic> item in body) {
+          final pd = await getProduct(item["Pd_ID"]);
 
-        products.add(pd);
+          products.add(pd);
+        }
+
+        return products;
+      } else {
+        throw "Ocorreu um erro a carregar os produtos";
       }
-
-      return products;
     } else {
-      throw "Ocorreu um erro a carregar os produtos";
+      String url = "http://$ip:3000/api/v1/produtos/$catId";
+
+      final res = await http.get(Uri.parse(url));
+
+      if (res.statusCode == 200) {
+        final body = jsonDecode(res.body)['result'];
+
+        List<Product> products = [];
+        for (final Map<String, dynamic> item in body) {
+          final pd = await getProduct(item["Pd_ID"]);
+
+          products.add(pd);
+        }
+
+        return products;
+      } else {
+        throw "Ocorreu um erro a carregar os produtos";
+      }
     }
   }
 
-  Future<List<Product>> getProductsSubCategory(int catId, int subCatId) async {
-    String url = "http://$ip:3000/api/v1/produtos/";
+  Future<List<Product>> getProductsSubCategory(int catId, int subCatId, String search) async {
+    if (search.isNotEmpty) {
+      String url = "http://$ip:3000/api/v1/produtos/searchSubcategoria";
 
-    final res = await http.post(Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({
-          'categoriaID': catId,
-          'subcategoriaID': subCatId,
-        }));
+      final res = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            'categoriaID': catId,
+            'subcategoriaID': subCatId,
+            'pesquisa': search,
+          }));
 
-    if (res.statusCode == 200) {
-      final body = jsonDecode(res.body)['result'];
+      if (res.statusCode == 200) {
+        final body = jsonDecode(res.body)['result'];
 
-      List<Product> products = [];
-      for (final Map<String, dynamic> item in body) {
-        final pd = await getProduct(item["Pd_ID"]);
-        products.add(pd);
+        List<Product> products = [];
+        for (final Map<String, dynamic> item in body) {
+          final pd = await getProduct(item["Pd_ID"]);
+          products.add(pd);
+        }
+
+        return products;
+      } else {
+        throw "Ocorreu um erro a carregar os produtos";
       }
-
-      return products;
     } else {
-      throw "Ocorreu um erro a carregar os produtos";
+      String url = "http://$ip:3000/api/v1/produtos/";
+
+      final res = await http.post(Uri.parse(url),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            'categoriaID': catId,
+            'subcategoriaID': subCatId,
+          }));
+
+      if (res.statusCode == 200) {
+        final body = jsonDecode(res.body)['result'];
+
+        List<Product> products = [];
+        for (final Map<String, dynamic> item in body) {
+          final pd = await getProduct(item["Pd_ID"]);
+          products.add(pd);
+        }
+
+        return products;
+      } else {
+        throw "Ocorreu um erro a carregar os produtos";
+      }
     }
   }
 }
