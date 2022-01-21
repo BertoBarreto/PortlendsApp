@@ -99,6 +99,18 @@ BEGIN
 	ELSE
 	COMMIT TRANSACTION
 
+-- get search category products
+
+CREATE PROCEDURE getSearchCategoryProducts @CategoriaID int, @name varchar(255)
+AS
+BEGIN 
+	TRANSACTION
+	select Pd_ID from Inventario where CategoriaID = @CategoriaID AND Inventario.Disponibilidade>=0 AND Nome LIKE @name
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
 -- get category search
 
 CREATE PROCEDURE getCategorySearch @name varchar(255)
@@ -121,6 +133,18 @@ AS
 BEGIN 
 	TRANSACTION
 	select Pd_ID from Inventario where CategoriaID = @CategoriaID and SubcategoriaId = @SubcategoriaID AND Inventario.Disponibilidade>=0
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
+--get subcategory products search
+
+CREATE PROCEDURE getSearchSubcategoryProducts @CategoriaID int, @SubcategoriaID int,@name varchar(255)
+AS
+BEGIN 
+	TRANSACTION
+	select Pd_ID from Inventario where CategoriaID = @CategoriaID and SubcategoriaId = @SubcategoriaID AND Inventario.Disponibilidade>=0 AND Inventario.Nome LIKE @name
 	IF @@ERROR <>0
 	ROLLBACK TRANSACTION
 	ELSE
@@ -150,6 +174,51 @@ AS
 BEGIN 
 	TRANSACTION
 	select Pd_ID from Inventario join Users on Users.UID=Inventario.UID Where Users.uid=@uid AND Inventario.Disponibilidade>=0
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
+-- get product price
+CREATE PROCEDURE getProductPrice @pdID int
+AS
+BEGIN 
+	TRANSACTION
+	SELECT quantia FROM PrecoAluguer WHERE PrecoAluguer.data >= ALL (select data from PrecoAluguer Where Pd_ID=@pdID)
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
+-- remove product
+CREATE PROCEDURE removeProduct @pdID int
+AS
+BEGIN 
+	TRANSACTION
+	UPDATE Inventario Set disponibilidade = -1 where Pd_ID=@pdID
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
+
+-- remove favorite
+CREATE PROCEDURE removeFavorite @pdID int,@uid int
+AS
+BEGIN 
+	TRANSACTION
+	DELETE Favoritos Where Pd_ID = @pdID and UID = @uid
+	IF @@ERROR <>0
+	ROLLBACK TRANSACTION
+	ELSE
+	COMMIT TRANSACTION
+
+-- add favorite
+CREATE PROCEDURE addFavorite @pdID int, @uid int
+AS
+BEGIN 
+	TRANSACTION
+	INSERT INTO Favoritos VALUES (@uid,@pdID)
 	IF @@ERROR <>0
 	ROLLBACK TRANSACTION
 	ELSE

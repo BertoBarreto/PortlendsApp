@@ -19,10 +19,10 @@ module.exports = {
   getSearchCategorySubcategoryProd: "EXEC getSearchSubcategoryProducts @CategoriaID = @categoriaId, @SubcategoriaID = @subcategoriaId, @name=@name;",
   //?Products
   getProduct: "EXEC getProductInfo @pdID=@pdID",
-  getPrecoProduct: "SELECT quantia FROM PrecoAluguer WHERE PrecoAluguer.data >= ALL (select data from PrecoAluguer Where Pd_ID=@pdID)",
-  deleteProduct: "UPDATE Inventario Set disponibilidade = -1 where Pd_ID=@pdID",
-  deleteProductFav: "DELETE Favoritos Where Pd_ID = @pdID and UID = @uid",
-  addProductFav: "INSERT INTO Favoritos VALUES (@uid,@pdID);"
+  getPrecoProduct: "EXEC getProductPrice @pdID=@pdID",
+  deleteProduct: "EXEC removeProduct @pdID=@pdID",
+  deleteProductFav: "EXEC removeFavorite @pdID=@pdID, @uid=@uid",
+  addProductFav: "EXEC addFavorite @pdID=@pdID, @uid=@uid"
   
 };
 

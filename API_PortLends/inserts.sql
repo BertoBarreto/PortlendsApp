@@ -6,7 +6,9 @@ INSERT INTO Categorias VALUES('Roupa','https://firebasestorage.googleapis.com/v0
 INSERT INTO Categorias VALUES('Desporto','https://firebasestorage.googleapis.com/v0/b/portlends-ad27b.appspot.com/o/Categorias%2Fdesporto.jpg?alt=media&token=e9390ba1-7a01-401b-92ba-3a2c279abbbd')
 INSERT INTO Categorias VALUES('Livros','https://firebasestorage.googleapis.com/v0/b/portlends-ad27b.appspot.com/o/Categorias%2Flivros.jfif?alt=media&token=14287915-bb39-49dd-b6b1-d2bc51b074b5')
 
-select * from Categorias
+
+
+
 
 INSERT INTO Subcategorias VALUES('Gala',5)
 INSERT INTO Subcategorias VALUES('Blusas',5)
@@ -92,7 +94,7 @@ INSERT INTO Inventario Values(2,5,5,1,'Fato de Noivo','Um simples fato de noivo'
 INSERT INTO Inventario Values(2,5,5,8,'Sobretudo','Um simples Sobretudo','Tamanho S','Está praticamente como novo',1)
 
 UPDATE Inventario Set Disponibilidade=1
-select*from Inventario
+
 
 Insert into ImagensProdutos VALUES(1,'https://firebasestorage.googleapis.com/v0/b/portlends-ad27b.appspot.com/o/Produtos%2F1%2Fnoiva.jpg?alt=media&token=efba4ba3-83f8-429a-878a-462051b9efd5')
 Insert into ImagensProdutos VALUES(2,'https://firebasestorage.googleapis.com/v0/b/portlends-ad27b.appspot.com/o/Produtos%2F2%2Fnoivo.jpg?alt=media&token=3709bbeb-55b6-4fa8-ab33-1fdd99a0ed89')
@@ -137,7 +139,7 @@ left join ImagensProdutos on ImagensProdutos.Pd_ID = Inventario.Pd_ID
 left join PrecoAluguer on PrecoAluguer.Pd_ID=Inventario.Pd_ID 
 where CategoriaID = 5 AND PrecoAluguer.data >= ALL (select data from PrecoAluguer where Pd_ID=1)
 
-select * from PrecoAluguer
+select * from Users
 select quantia, Pd_ID from PrecoAluguer
 where data >= ALL (select * from PrecoAluguer
 					select quantia, Pd_ID from PrecoAluguer where Pd_ID=1)
@@ -148,12 +150,17 @@ Update Inventario Set Descricao='Lorem ipsum dolor sit amet, consectetur adipisc
 SET ANSI_WARNINGS ON;
 
 
-select Categorias.Categoria_ID,Categorias.imageUrl,Categorias.Descricao, count(A.Pd_ID) as contagem from Categorias
-	left join (select * from Inventario where Inventario.Disponibilidade>=0) A on A.CategoriaID=Categorias.Categoria_ID
-	group by Categorias.Categoria_ID,Categorias.Descricao,Categorias.imageUrl
+select * from favoritos 
+join Favoritos on Favoritos.Pd_ID=Inventario.Pd_ID
+where CategoriaID = 5 AND Inventario.Disponibilidade>=0
 
 
-	select * from favoritos
+select * from Favoritos
+join Inventario on Favoritos.Pd_ID=Inventario.Pd_ID
+join ProdutosEmprestados on ProdutosEmprestados.PdID=Inventario.Pd_ID
+join Devolucoes on ProdutosEmprestados.emp_ID=Devolucoes.emp_ID
 
+insert into ProdutosEmprestados VALUES (1,3,1,'2022-01-15 00:00:00','2022-01-21 00:00:00')
+insert into Devolucoes VALUES(1,'2022-01-20 00:00:00')
 
 
