@@ -35,8 +35,8 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Categorias',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Obtidos',
+            icon: Icon(Icons.inventory_2),
+            label: 'Meus Produtos',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
