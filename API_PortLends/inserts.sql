@@ -9,7 +9,6 @@ INSERT INTO Categorias VALUES('Livros','https://firebasestorage.googleapis.com/v
 
 
 
-
 INSERT INTO Subcategorias VALUES('Gala',5)
 INSERT INTO Subcategorias VALUES('Blusas',5)
 INSERT INTO Subcategorias VALUES('T-Shirts',5)
@@ -29,7 +28,7 @@ where Subcategorias.Categoria_ID = 1
 group by Subcategorias.Subcategoria_ID,Subcategorias.Descricao
 
 
-select * from Categorias
+select * from Users
   select * from Inventario where CategoriaID = 5 and SubcategoriaId = 1
 
 select * from Inventario
@@ -59,7 +58,7 @@ INSERT INTO Users
 VALUES ('Roberto Barreto','2002-04-09 10:29:57.400','Rua da esquina',4900,'teste123','robertofmbarreto@gmail.com')
 
 INSERT INTO Users
-VALUES ('Maria Madalena','2001-01-18 10:29:57.400',668989899,'Rua da esquina',4900,'teste123','robertofmbarreto@gmail.com')
+VALUES ('Maria Madalena','2001-01-18 10:29:57.400',668989899,'Rua da esquina',4900,'teste123','mariamadalena@gmail.com')
 
 INSERT INTO Users
 VALUES (@userName,@userBirthDate,@userContact,@userStreet,@userPC,@userPassword,@userEmail)
@@ -83,8 +82,8 @@ EXEC getUsersPasswdByEmail @email = 'robertofmbarreto@gmail.com'
 EXEC getUsersById @id=2
 
 UPDATE Users
-SET dt_nasc = '2002-04-09 10:29:57.400'
-WHERE uid=2
+SET Email = 'mariamadalena@gmail.com'
+WHERE uid=1
 
 DBCC CHECKIDENT (Inventario, RESEED, 0);
 GO

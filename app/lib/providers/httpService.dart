@@ -8,7 +8,7 @@ import 'package:portlends/models/subcategory.dart';
 import 'package:portlends/models/user.dart';
 
 class HttpService {
-  final String ip = '192.168.1.65';
+  final String ip = '192.168.1.97';
   //final String ip = '192.168.182.21';
 
   Future<Map<String, dynamic>> login(String password, String email) async {
